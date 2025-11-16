@@ -1002,6 +1002,39 @@
             
             // ===== KONFIGURASI GOOGLE APPS SCRIPT =====
             const GAS_WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbyzilezC2vuraRLz-C9RFUX9d9vHgDBTB0BGOzKqizGCDOuFvgh9MwVq2J7mnsmNGkujQ/exec';
+/* ---------- Helper API POST with improved debug & user feedback ---------- */
+async function apiPost(action, payload) {
+  const body = { action: action, ...payload };
+  try {
+    const res = await fetch(GAS_WEB_APP_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(body)
+    });
+    const text = await res.text();
+    let jsonData = null;
+    try { jsonData = JSON.parse(text); } catch(e) { jsonData = null; }
+    console.groupCollapsed('apiPost debug — action: ' + action);
+    console.log('Request URL:', GAS_WEB_APP_URL);
+    console.log('Request body:', body);
+    console.log('HTTP status:', res.status, res.statusText);
+    console.log('Raw response text:', text);
+    console.log('Parsed JSON:', jsonData);
+    console.groupEnd();
+    if (jsonData !== null) return { ok: res.ok, status: res.status, data: jsonData };
+    return { ok: res.ok, status: res.status, data: { success: false, message: 'Non-JSON response', raw: text } };
+  } catch (err) {
+    console.error('apiPost network/CORS error:', err);
+    return { ok: false, status: 0, data: { success: false, message: 'Network / CORS error: ' + (err.message || err) } };
+  }
+}
+
+function setLoginStatus(txt) {
+  const el = document.querySelector('.login-error') || document.querySelector('#login-status-text') || document.getElementById('login-status-text');
+  if (el) el.textContent = txt;
+  else console.log('Login status:', txt);
+}
+
             
             // ===== DATA MASTER =====
             const KATEGORI_LIST = [
@@ -1289,24 +1322,9 @@ function showVideoAccessAlert() {
                 showLoading(loginBtn, "Connecting...");
 
                 try {
-                    const response = await fetch(GAS_WEB_APP_URL, {
-                        method: 'POST',
-                        body: JSON.stringify({
-                            action: 'login',
-                            role: attemptRole,
-                            username: username,
-                            password: password
-                        }),
-                        headers: {
-                            'Content-Type': 'application/json'
-                        }
-                    });
-
-                    if (!response.ok) {
-                        throw new Error(`Server error: ${response.statusText}`);
-                    }
-
-                    const result = await response.json();
+                    const resp = await apiPost('login', { role: attemptRole, username: username, password: password });
+                    if (!resp.ok) { throw new Error(resp.data && resp.data.message ? resp.data.message : 'Server error'); }
+                    const result = resp.data;
 
                     if (result.success) {
                         isLoggedIn = true;
@@ -1462,24 +1480,11 @@ function showVideoAccessAlert() {
                     // --- AKHIR PERUBAHAN ---
                     persetujuan: document.getElementById('persetujuan').checked
                 };
-                
+
                 try {
-                    const response = await fetch(GAS_WEB_APP_URL, {
-                        method: 'POST',
-                        body: JSON.stringify({
-                            action: 'submitRegistration',
-                            data: formData 
-                        }),
-                        headers: {
-                            'Content-Type': 'application/json'
-                        }
-                    });
-
-                    if (!response.ok) {
-                         throw new Error(`Server error: ${response.statusText}`);
-                    }
-
-                    const result = await response.json();
+                    const resp = await apiPost('submitRegistration', { data: formData });
+                    if (!resp.ok) { throw new Error(resp.data && resp.data.message ? resp.data.message : 'Server error'); }
+                    const result = resp.data;
 
                     if (result.success) {
                         // Tampilkan modal sukses
