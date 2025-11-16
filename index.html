@@ -148,7 +148,61 @@
         }
         /* --- AKHIR STYLE BARU --- */
 
-    </style>
+    
+/* ===== Responsiveness tweaks (mobile-first overrides) ===== */
+/* Kecilkan logo & teks header pada layar sangat kecil */
+@media (max-width: 480px) {
+  header .w-16 { width: 48px; height: 48px; } /* logo */
+  header h1 { font-size: 1rem; } /* text-xl -> lebih kecil */
+  header p.text-xs { display: none; } /* sembunyikan subtitle panjang */
+  header .h-20 { height: 64px; } /* header sedikit lebih pendek */
+}
+
+/* Buat container lebih fleksibel di mobile: maksimal full width, pad lebih kecil */
+@media (max-width: 640px) {
+  main.container { padding-left: 0.75rem; padding-right: 0.75rem; }
+  #form-card { margin: 0 0.5rem; border-radius: 1rem; }
+  #form-card .p-6 { padding: 1rem; } /* sm:p-8 jadi lebih kecil di mobile */
+}
+
+/* Tombol navigasi step: full width pada layar kecil, tetap inline di desktop */
+@media (max-width: 640px) {
+  .btn-form-nav {
+    width: 100%;
+    justify-content: center;
+    padding: 0.75rem;
+    box-sizing: border-box;
+  }
+  #form-navigation { flex-direction: column; gap: 0.75rem; align-items: stretch; }
+  #btn-prev { display:block; } /* tampilkan prev di mobile ketika diperlukan */
+  #btn-prev-placeholder { display:none; }
+}
+
+/* Stepper: ringkas di mobile */
+@media (max-width: 640px) {
+  .stepper-line { display: none; } /* hilangkan garis panjang antar step */
+  .stepper-step { flex: 1 1 auto; margin-bottom: 0.5rem; }
+  .stepper-label { display: none; } /* cukup nomor step di mobile */
+  .stepper-circle { width: 2rem; height: 2rem; font-size: 0.85rem; border-width: 3px; }
+  #stepper-container { overflow-x: auto; -webkit-overflow-scrolling: touch; padding-bottom: 0.25rem; }
+  #stepper-container ol { gap: 0.5rem; min-width: 420px; } /* agar bisa scroll horisontal */
+}
+
+/* Form inputs: tingkatkan target sentuh di mobile */
+@media (max-width: 640px) {
+  input, select, textarea, button { min-height: 44px; }
+  input[type="date"] { min-height: 44px; }
+}
+
+/* Tabel responsif: tambahkan padding di kiri/kanan pada mobile */
+@media (max-width: 640px) {
+  .overflow-x-auto { padding: 0.5rem 0.75rem; }
+}
+
+/* Minor: pastikan sticky header tidak menutupi konten saat scrollTo(0,0) */
+html { scroll-padding-top: 80px; } /* agar anchor/scroll tidak tertutup header */
+
+</style>
 </head>
 <body class="bg-gray-100 text-gray-800 antialiased">
 
@@ -2035,6 +2089,62 @@ document.addEventListener('DOMContentLoaded', function(){
 });
 </script>
 <!-- END: GAS Integration & Role-based UI Script -->
+
+
+<script>
+  // Pastikan tombol Prev di-hide/show berdasarkan langkah (tambahan safety)
+  (function(){
+    const btnPrev = document.getElementById('btn-prev');
+    const btnNext = document.getElementById('btn-next');
+    const submitBtn = document.getElementById('submit-form-btn');
+
+    function updateNavButtons(currentStep, totalSteps) {
+      if (!btnPrev || !btnNext || !submitBtn) return;
+      if (window.innerWidth <= 640) {
+        // mobile: tampilkan Prev jika step > 1
+        btnPrev.classList.toggle('hidden', currentStep <= 1);
+        // next/submit: jika langkah terakhir -> tampilkan submit, sembunyikan next
+        if (currentStep >= totalSteps) {
+          btnNext.classList.add('hidden');
+          submitBtn.classList.remove('hidden');
+        } else {
+          btnNext.classList.remove('hidden');
+          submitBtn.classList.add('hidden');
+        }
+      } else {
+        // desktop: gunakan style default (tidak full width)
+        btnPrev.classList.toggle('hidden', currentStep <= 1);
+        if (currentStep >= totalSteps) {
+          btnNext.classList.add('hidden');
+          submitBtn.classList.remove('hidden');
+        } else {
+          btnNext.classList.remove('hidden');
+          submitBtn.classList.add('hidden');
+        }
+      }
+    }
+
+    // Hook ke fungsi showStep / handleNextStep / handlePrevStep jika ada
+    // file Anda mendefinisikan currentStep & totalSteps serta showStep() — 
+    // jika ya, kita bisa "listen" dengan polling singkat (safe) bila tidak tersedia event.
+    let lastStep = null;
+    function pollStep() {
+      try {
+        if (typeof currentStep !== 'undefined' && typeof totalSteps !== 'undefined') {
+          if (lastStep !== currentStep) {
+            updateNavButtons(currentStep, totalSteps);
+            lastStep = currentStep;
+          }
+        }
+      } catch(e){}
+      requestAnimationFrame(pollStep);
+    }
+    requestAnimationFrame(pollStep);
+
+    // Re-evaluasi on resize
+    window.addEventListener('resize', () => updateNavButtons(typeof currentStep !== 'undefined' ? currentStep : 1, typeof totalSteps !== 'undefined' ? totalSteps : 6));
+  })();
+</script>
 
 </body>
 </html>
