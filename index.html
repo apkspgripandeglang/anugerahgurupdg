@@ -1001,40 +1001,7 @@
         document.addEventListener('DOMContentLoaded', function() {
             
             // ===== KONFIGURASI GOOGLE APPS SCRIPT =====
-            const GAS_WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbyzilezC2vuraRLz-C9RFUX9d9vHgDBTB0BGOzKqizGCDOuFvgh9MwVq2J7mnsmNGkujQ/exec';
-/* ---------- Helper API POST with improved debug & user feedback ---------- */
-async function apiPost(action, payload) {
-  const body = { action: action, ...payload };
-  try {
-    const res = await fetch(GAS_WEB_APP_URL, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(body)
-    });
-    const text = await res.text();
-    let jsonData = null;
-    try { jsonData = JSON.parse(text); } catch(e) { jsonData = null; }
-    console.groupCollapsed('apiPost debug — action: ' + action);
-    console.log('Request URL:', GAS_WEB_APP_URL);
-    console.log('Request body:', body);
-    console.log('HTTP status:', res.status, res.statusText);
-    console.log('Raw response text:', text);
-    console.log('Parsed JSON:', jsonData);
-    console.groupEnd();
-    if (jsonData !== null) return { ok: res.ok, status: res.status, data: jsonData };
-    return { ok: res.ok, status: res.status, data: { success: false, message: 'Non-JSON response', raw: text } };
-  } catch (err) {
-    console.error('apiPost network/CORS error:', err);
-    return { ok: false, status: 0, data: { success: false, message: 'Network / CORS error: ' + (err.message || err) } };
-  }
-}
-
-function setLoginStatus(txt) {
-  const el = document.querySelector('.login-error') || document.querySelector('#login-status-text') || document.getElementById('login-status-text');
-  if (el) el.textContent = txt;
-  else console.log('Login status:', txt);
-}
-
+            const GAS_WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbwSwoi1g6ySRD-coz7qZFHSgb4CQIr_51IBvOW5g37fqpgPg4rNZq-7xWKA7lnUJwR0ow/exec';
             
             // ===== DATA MASTER =====
             const KATEGORI_LIST = [
@@ -1322,9 +1289,24 @@ function showVideoAccessAlert() {
                 showLoading(loginBtn, "Connecting...");
 
                 try {
-                    const resp = await apiPost('login', { role: attemptRole, username: username, password: password });
-                    if (!resp.ok) { throw new Error(resp.data && resp.data.message ? resp.data.message : 'Server error'); }
-                    const result = resp.data;
+                    const response = await fetch(GAS_WEB_APP_URL, {
+                        method: 'POST',
+                        body: JSON.stringify({
+                            action: 'login',
+                            role: attemptRole,
+                            username: username,
+                            password: password
+                        }),
+                        headers: {
+                            'Content-Type': 'application/json'
+                        }
+                    });
+
+                    if (!response.ok) {
+                        throw new Error(`Server error: ${response.statusText}`);
+                    }
+
+                    const result = await response.json();
 
                     if (result.success) {
                         isLoggedIn = true;
@@ -1480,11 +1462,24 @@ function showVideoAccessAlert() {
                     // --- AKHIR PERUBAHAN ---
                     persetujuan: document.getElementById('persetujuan').checked
                 };
-
+                
                 try {
-                    const resp = await apiPost('submitRegistration', { data: formData });
-                    if (!resp.ok) { throw new Error(resp.data && resp.data.message ? resp.data.message : 'Server error'); }
-                    const result = resp.data;
+                    const response = await fetch(GAS_WEB_APP_URL, {
+                        method: 'POST',
+                        body: JSON.stringify({
+                            action: 'submitRegistration',
+                            data: formData 
+                        }),
+                        headers: {
+                            'Content-Type': 'application/json'
+                        }
+                    });
+
+                    if (!response.ok) {
+                         throw new Error(`Server error: ${response.statusText}`);
+                    }
+
+                    const result = await response.json();
 
                     if (result.success) {
                         // Tampilkan modal sukses
@@ -1830,6 +1825,216 @@ function showVideoAccessAlert() {
     setup('admin-password','toggle-admin-password','icon-eye-admin','icon-eye-off-admin');
 })();
 </script>
+
+
+<!-- START: GAS Integration & Role-based UI Script -->
+<script>
+/*
+  Integration behavior:
+  - If served by Google Apps Script (google.script is available), use google.script.run for:
+      - submitForm (submit registration)
+      - login(role, username, password)
+      - getStats()
+      - getAccounts(role) [if needed]
+      - getFormSubmissions(limit)
+  - Otherwise, if GAS_WEB_APP_URL is defined, uses fetch() to call endpoints.
+  - On successful login, stores role & profile in localStorage and updates UI (shows/hides tabs).
+*/
+
+/* Configuration: set GAS_WEB_APP_URL if using fetch() fallback */
+const GAS_WEB_APP_URL = typeof GAS_WEB_APP_URL !== 'undefined' ? GAS_WEB_APP_URL : null;
+
+function useGoogleScriptRun() {
+  return (typeof google !== 'undefined' && google.script && google.script.run);
+}
+
+/* Helpers to call server */
+function callSubmitForm(formData, cb) {
+  if (useGoogleScriptRun()) {
+    google.script.run.withSuccessHandler(cb).submitForm(formData);
+  } else if (GAS_WEB_APP_URL) {
+    fetch(GAS_WEB_APP_URL, {
+      method: 'POST',
+      headers: {'Content-Type':'application/json'},
+      body: JSON.stringify({action:'submitForm', data: formData})
+    }).then(r=>r.json()).then(cb).catch(err=>{console.error(err); cb({success:false, error:err.message});});
+  } else {
+    console.error('No GAS integration available.');
+    cb({success:false, error:'No GAS integration available.'});
+  }
+}
+
+function callLogin(role, username, password, cb) {
+  if (useGoogleScriptRun()) {
+    google.script.run.withSuccessHandler(cb).login(role, username, password);
+  } else if (GAS_WEB_APP_URL) {
+    fetch(GAS_WEB_APP_URL, {
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({action:'login', role: role, username: username, password: password})
+    }).then(r=>r.json()).then(cb).catch(err=>{console.error(err); cb({success:false, error:err.message});});
+  } else {
+    console.error('No GAS integration available.');
+    cb({success:false, error:'No GAS integration available.'});
+  }
+}
+
+function callGetStats(cb) {
+  if (useGoogleScriptRun()) {
+    google.script.run.withSuccessHandler(cb).getStats();
+  } else if (GAS_WEB_APP_URL) {
+    fetch(GAS_WEB_APP_URL + '?action=getStats').then(r=>r.json()).then(cb).catch(err=>{console.error(err); cb({total:0, perKategori:{}});});
+  } else {
+    cb({total:0, perKategori:{}});
+  }
+}
+
+/* Role-based UI control */
+function setLoggedIn(role, profile) {
+  localStorage.setItem('ag_logged_in', '1');
+  localStorage.setItem('ag_role', role);
+  localStorage.setItem('ag_profile', JSON.stringify(profile || {}));
+  applyRoleToUI(role, profile);
+}
+
+function logout() {
+  localStorage.removeItem('ag_logged_in');
+  localStorage.removeItem('ag_role');
+  localStorage.removeItem('ag_profile');
+  location.reload();
+}
+
+function applyRoleToUI(role, profile) {
+  // hide all protected sections by default
+  document.querySelectorAll('#main-content-juri, #main-content-admin, #admin-content-wrapper, #juri-content-wrapper, #admin-users').forEach(el=>{
+    if(el) el.classList.add('hidden');
+  });
+  // update login status text
+  const loginStatusText = document.getElementById('login-status-text');
+  if (loginStatusText) {
+    if (role) {
+      loginStatusText.innerHTML = 'Anda masuk sebagai: <strong class="font-medium text-indigo-600">' + role.toUpperCase() + '</strong>';
+      const logoutBtn = document.getElementById('logout-btn');
+      if (logoutBtn) logoutBtn.classList.remove('hidden');
+    } else {
+      loginStatusText.innerHTML = 'Anda masuk sebagai: <strong class="font-medium text-indigo-600">Pendaftar</strong>';
+      const logoutBtn = document.getElementById('logout-btn');
+      if (logoutBtn) logoutBtn.classList.add('hidden');
+    }
+  }
+
+  if (role === 'juri') {
+    const juriContent = document.getElementById('juri-content-wrapper');
+    if (juriContent) juriContent.classList.remove('hidden');
+    const juriPrompt = document.getElementById('juri-login-prompt');
+    if (juriPrompt) juriPrompt.classList.add('hidden');
+  } else if (role === 'admin') {
+    const adminContent = document.getElementById('admin-content-wrapper');
+    if (adminContent) adminContent.classList.remove('hidden');
+    const adminPrompt = document.getElementById('admin-login-prompt');
+    if (adminPrompt) adminPrompt.classList.add('hidden');
+    // show admin internal tabs
+    const adminUsersTab = document.getElementById('admin-users');
+    if (adminUsersTab && profile && profile.username === profile.username) {
+      // show management tab button if exists
+      const adminTabOption = document.getElementById('admin-tabs-mobile-option-users');
+      if (adminTabOption) adminTabOption.classList.remove('hidden');
+    }
+  } else if (role === 'superadmin') {
+    // super admin: show admin content and management
+    const adminContent = document.getElementById('admin-content-wrapper');
+    if (adminContent) adminContent.classList.remove('hidden');
+    const adminUsers = document.getElementById('admin-users');
+    if (adminUsers) adminUsers.classList.remove('hidden');
+    const adminPrompt = document.getElementById('admin-login-prompt');
+    if (adminPrompt) adminPrompt.classList.add('hidden');
+  }
+}
+
+/* Init: apply stored session */
+document.addEventListener('DOMContentLoaded', function(){
+  try {
+    const logged = localStorage.getItem('ag_logged_in');
+    const role = localStorage.getItem('ag_role');
+    const profile = JSON.parse(localStorage.getItem('ag_profile') || '{}');
+    if (logged && role) applyRoleToUI(role, profile);
+    // bind login modal buttons if present
+    const loginBtn = document.getElementById('login-btn');
+    if (loginBtn) {
+      loginBtn.addEventListener('click', function(e){
+        e.preventDefault();
+        const username = document.getElementById('login-username').value.trim();
+        const password = document.getElementById('login-password').value;
+        const selectedRole = (document.getElementById('login-role') && document.getElementById('login-role').value) || 'juri';
+        if (!username || !password) {
+          alert('Masukkan username dan password.');
+          return;
+        }
+        callLogin(selectedRole, username, password, function(res){
+          if (res && res.success) {
+            setLoggedIn(selectedRole, res.profile || {});
+            // close modal if exists
+            const loginModal = document.getElementById('login-modal');
+            if (loginModal) loginModal.classList.add('hidden');
+          } else {
+            const loginError = document.getElementById('login-error');
+            if (loginError) loginError.textContent = res.error || 'Login gagal';
+            else alert('Login gagal: ' + (res.error || 'unknown'));
+          }
+        });
+      });
+    }
+
+    // Bind juri login button(s) - they call the modal or directly prompt
+    const juriLoginBtn = document.getElementById('juri-login-btn');
+    if (juriLoginBtn) {
+      juriLoginBtn.addEventListener('click', function(){
+        // open modal if exists
+        const loginModal = document.getElementById('login-modal');
+        if (loginModal) loginModal.classList.remove('hidden');
+        // preselect role = juri if login-role selector exists
+        const sel = document.getElementById('login-role');
+        if (sel) sel.value = 'juri';
+      });
+    }
+    const adminLoginBtn = document.getElementById('admin-login-btn');
+    if (adminLoginBtn) {
+      adminLoginBtn.addEventListener('click', function(){
+        const loginModal = document.getElementById('login-modal');
+        if (loginModal) loginModal.classList.remove('hidden');
+        const sel = document.getElementById('login-role');
+        if (sel) sel.value = 'admin';
+      });
+    }
+    // Logout button
+    const logoutBtn = document.getElementById('logout-btn');
+    if (logoutBtn) {
+      logoutBtn.addEventListener('click', function(){ logout(); });
+    }
+
+    // Auto-refresh stats on load
+    callGetStats(function(stats){
+      try {
+        if (stats && typeof stats.total !== 'undefined') {
+          const el = document.getElementById('stat-total');
+          if (el) el.textContent = stats.total;
+          const ael = document.getElementById('admin-stat-total');
+          if (ael) ael.textContent = stats.total;
+          // per-kategori numbers (if ids exist)
+          if (stats.perKategori) {
+            // map category keys to elements if you have fixed ids, else skip
+            console.log('perKategori', stats.perKategori);
+          }
+        }
+      } catch(e){ console.error(e); }
+    });
+
+  } catch (err) {
+    console.error('Init error', err);
+  }
+});
+</script>
+<!-- END: GAS Integration & Role-based UI Script -->
 
 </body>
 </html>
