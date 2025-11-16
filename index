@@ -1,0 +1,1793 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Anugerah Guru Pandeglang - PGRI</title>
+    <!-- Memuat Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Memuat Font Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        /* Menggunakan font Inter sebagai default */
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        /* Style untuk scrollbar yang lebih halus */
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #c4c4c4;
+            border-radius: 6px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #a1a1a1;
+        }
+        /* Menyembunyikan elemen saat tidak aktif */
+        .hidden {
+            display: none;
+        }
+        /* Style untuk tombol tab utama yang aktif */
+        .main-tab-btn.active {
+            border-color: #4f46e5; /* indigo-600 */
+            color: #4f46e5;
+            background-color: #eef2ff; /* indigo-50 */
+        }
+
+        /* --- STYLE BARU UNTUK FORMULIR ELEGAN --- */
+
+        /* Style untuk header bagian form (di dalam step) */
+        .form-section-header {
+            background-color: #f9fafb; /* gray-50 */
+            border-bottom: 1px solid #e5e7eb; /* gray-200 */
+            padding: 0.75rem 1.5rem; /* py-3 px-6 */
+            margin: 1.5rem -1.5rem 1.5rem -1.5rem; /* my-6 -mx-6 */
+            display: flex;
+            align-items: center;
+        }
+        .form-section-header h3 {
+            font-size: 1.125rem; /* text-lg */
+            font-weight: 600; /* font-semibold */
+            color: #3730a3; /* indigo-800 */
+            margin-left: 0.5rem; /* ml-2 */
+        }
+        
+        /* Style untuk Stepper (Penanda Langkah) */
+        .stepper-step {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+        }
+        .stepper-circle {
+            width: 2.5rem; /* w-10 */
+            height: 2.5rem; /* h-10 */
+            border-radius: 9999px; /* rounded-full */
+            background-color: #e5e7eb; /* bg-gray-200 */
+            color: #6b7280; /* text-gray-500 */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600; /* font-semibold */
+            transition: all 0.3s ease;
+            border: 4px solid #f3f4f6; /* border-gray-100 */
+        }
+        .stepper-label {
+            font-size: 0.75rem; /* text-xs */
+            font-weight: 600; /* font-semibold */
+            color: #6b7280; /* text-gray-500 */
+            margin-top: 0.5rem; /* mt-2 */
+            text-align: center;
+        }
+        .stepper-line {
+            flex-grow: 1;
+            height: 4px; /* h-1 */
+            background-color: #e5e7eb; /* bg-gray-200 */
+            margin: 0 0.5rem; /* mx-2 */
+            margin-bottom: 2rem; /* mb-8 */
+        }
+
+        /* Status Stepper */
+        .stepper-step.active .stepper-circle {
+            background-color: #eef2ff; /* bg-indigo-50 */
+            color: #4f46e5; /* text-indigo-600 */
+            border-color: #4f46e5; /* border-indigo-600 */
+        }
+        .stepper-step.active .stepper-label {
+            color: #4f46e5; /* text-indigo-600 */
+        }
+        .stepper-step.completed .stepper-circle {
+            background-color: #10b981; /* bg-emerald-500 */
+            color: #ffffff; /* text-white */
+            border-color: #f0fdf4; /* border-emerald-50 */
+        }
+        .stepper-step.completed .stepper-label {
+            color: #059669; /* text-emerald-700 */
+        }
+
+        /* Style Tombol Navigasi Form */
+        .btn-form-nav {
+            display: inline-flex;
+            align-items: center;
+            padding: 0.625rem 1.25rem; /* py-2.5 px-5 */
+            border-radius: 0.5rem; /* rounded-lg */
+            font-weight: 500; /* font-medium */
+            transition: all 0.2s ease;
+            box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05); /* shadow-sm */
+        }
+        .btn-prev {
+            background-color: #ffffff; /* bg-white */
+            color: #374151; /* text-gray-700 */
+            border: 1px solid #d1d5db; /* border-gray-300 */
+        }
+        .btn-prev:hover {
+            background-color: #f9fafb; /* hover:bg-gray-50 */
+        }
+        .btn-next {
+            background-color: #4f46e5; /* bg-indigo-600 */
+            color: #ffffff; /* text-white */
+            border: 1px solid transparent;
+        }
+        .btn-next:hover {
+            background-color: #4338ca; /* hover:bg-indigo-700 */
+        }
+        .btn-submit {
+            background-color: #10b981; /* bg-emerald-600 */
+            color: #ffffff; /* text-white */
+            border: 1px solid transparent;
+        }
+        .btn-submit:hover {
+            background-color: #059669; /* hover:bg-emerald-700 */
+        }
+        /* --- AKHIR STYLE BARU --- */
+
+    </style>
+</head>
+<body class="bg-gray-100 text-gray-800 antialiased">
+
+    <!-- ===== HEADER ===== -->
+    <header class="bg-white shadow-md sticky top-0 z-50">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-20">
+                <!-- Logo dan Judul -->
+                <div class="flex items-center space-x-3">
+                    <!-- Logo PGRI -->
+                    <div class="w-16 h-16 rounded-full overflow-hidden flex-shrink-0 border border-gray-200">
+                        <img class="w-full h-full object-cover" src="https://raw.githubusercontent.com/edibrata/image/main/Logo%20PGRI%20Official.png" alt="Logo PGRI">
+                    </div>
+                    <div>
+                        <h1 class="text-xl sm:text-2xl font-bold text-gray-900">Anugerah Guru</h1>
+                        <p class="text-xs sm:text-sm text-gray-600">PGRI Kabupaten Pandeglang</p>
+                        <p class="text-xs text-gray-500 hidden sm:block">Dalam Rangka Hari Guru Nasional Tahun 2025 dan HUT Ke-80 PGRI</p>
+                    </div>
+                </div>
+
+                <!-- Status Login (Dinamis) -->
+                <div id="login-status" class="flex items-center space-x-2">
+                    <span id="login-status-text" class="text-sm text-gray-600">Anda masuk sebagai: <strong class="font-medium text-indigo-600">Pendaftar</strong></span>
+                    <button id="logout-btn" class="hidden text-sm font-medium text-red-600 hover:text-red-800 inline-flex items-center">
+                        <svg class="w-5 h-5 mr-1" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" /></svg>
+                        Logout
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- ===== KONTEN UTAMA ===== -->
+    <main class="container mx-auto p-4 sm:p-6 lg:p-8">
+
+        <!-- ===== NAVIGASI TAB UTAMA ===== -->
+        <div class="mb-6">
+            <div class="sm:hidden">
+                <label for="main-tabs-mobile" class="sr-only">Pilih tab</label>
+                <select id="main-tabs-mobile" name="main-tabs-mobile" class="block w-full rounded-md border-gray-300 focus:border-indigo-500 focus:ring-indigo-500">
+                    <option value="dashboard" selected>Dashboard</option>
+                    <option value="form">Formulir Pendaftaran</option>
+                    <option value="juri">Juri</option>
+                    <option value="admin">Admin</option>
+                </select>
+            </div>
+            <div class="hidden sm:block">
+                <div id="main-tab-nav" class="border-b border-gray-200">
+                    <nav class="-mb-px flex space-x-8" aria-label="Tabs">
+                        <button id="main-tab-dashboard" class="main-tab-btn active whitespace-nowrap py-4 px-3 border-b-2 font-medium text-sm text-gray-500 hover:text-gray-700 hover:border-gray-300 flex items-center" data-tab="dashboard">
+                            <svg class="w-4 h-4 mr-1.5 text-gray-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0h2m4 0h2m-6 0V9a2 2 0 012-2h2a2 2 0 012 2v10m0 0v-6a2 2 0 00-2-2h-2a2 2 0 00-2 2v6m0 0h-2" /></svg>
+                            Dashboard Publik
+                        </button>
+                        <button id="main-tab-form" class="main-tab-btn whitespace-nowrap py-4 px-3 border-b-2 font-medium text-sm text-gray-500 hover:text-gray-700 hover:border-gray-300 flex items-center" data-tab="form">
+                            <svg class="w-4 h-4 mr-1.5 text-gray-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" /></svg>
+                            Formulir Pendaftaran
+                        </button>
+                        <button id="main-tab-juri" class="main-tab-btn whitespace-nowrap py-4 px-3 border-b-2 font-medium text-sm text-gray-500 hover:text-gray-700 hover:border-gray-300 flex items-center" data-tab="juri">
+                            <svg class="w-4 h-4 mr-1.5 text-gray-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" /></svg>
+                            Juri
+                        </button>
+                        <button id="main-tab-admin" class="main-tab-btn whitespace-nowrap py-4 px-3 border-b-2 font-medium text-sm text-gray-500 hover:text-gray-700 hover:border-gray-300 flex items-center" data-tab="admin">
+                            <svg class="w-4 h-4 mr-1.5 text-gray-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" /></svg>
+                            Admin
+                        </button>
+                    </nav>
+                </div>
+            </div>
+        </div>
+
+        <!-- ===== KONTEN TAB: DASHBOARD (Publik) ===== -->
+        <div id="main-content-dashboard" class="main-content-div">
+            <h2 class="text-3xl font-bold text-gray-900 mb-6">Dasbor Statistik Pendaftar</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <!-- Stat Total -->
+                <div class="bg-white rounded-2xl shadow-lg p-6 flex items-center space-x-4">
+                    <div class="bg-indigo-100 rounded-full p-3">
+                        <svg class="w-8 h-8 text-indigo-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19.128a9.38 9.38 0 002.625.372 9.337 9.337 0 004.121-.952 4.125 4.125 0 00-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.003c0 1.113.285 2.16.786 3.07M15 19.128c-1.113 0-2.16-.285-3.07-.786v.003c-1.113 0-2.16.285-3.07.786m6.14 0v.003c1.113 0 2.16.285 3.07.786M15 19.128c1.113 0 2.16.285 3.07.786M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M9 12a3 3 0 11-6 0 3 3 0 016 0zM9 12c0-1.657 1.343-3 3-3s3 1.343 3 3-1.343 3-3 3-3-1.343-3-3zM9 12v9m0 0H6m3 0h3m-3 0v-6m0 6V9" /></svg>
+                    </div>
+                    <div>
+                        <p class="text-sm font-medium text-gray-500">Total Pendaftar</p>
+                        <p id="stat-total" class="text-3xl font-bold text-gray-900">0</p>
+                    </div>
+                </div>
+                <!-- Stat Kategori 1 -->
+                <div class="bg-white rounded-2xl shadow-lg p-6 flex items-center space-x-4">
+                    <div class="bg-green-100 rounded-full p-3">
+                        <svg class="w-8 h-8 text-green-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09zM18.259 8.715L18 9.75l-.259-1.035a3.375 3.375 0 00-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 002.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 002.456 2.456L21.75 6l-1.035.259a3.375 3.375 0 00-2.456 2.456zM16.894 20.567L16.5 21.75l-.394-1.183a2.25 2.25 0 00-1.423-1.423L13.5 18.75l1.183-.394a2.25 2.25 0 001.423-1.423l.394-1.183.394 1.183a2.25 2.25 0 001.423 1.423l1.183.394-1.183.394a2.25 2.25 0 00-1.423 1.423z" /></svg>
+                    </div>
+                    <div>
+                        <p class="text-sm font-medium text-gray-500">Guru Inovatif</p>
+                        <p id="stat-k1" class="text-3xl font-bold text-gray-900">0</p>
+                    </div>
+                </div>
+                <!-- Stat Kategori 2 -->
+                <div class="bg-white rounded-2xl shadow-lg p-6 flex items-center space-x-4">
+                    <div class="bg-blue-100 rounded-full p-3">
+                        <svg class="w-8 h-8 text-blue-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M12 18v-5.25m0 0a6.01 6.01 0 001.5-.189m-1.5.189a6.01 6.01 0 01-1.5-.189m3.75 7.478a12.06 12.06 0 01-4.5 0m3.75 0a12.06 12.06 0 004.5 0m-4.5 0v.75M12 12.75v-1.5m0 0v-1.5m0 0V9.75m0 0V9.75M12 12.75v1.5m0 0v1.5m0 0v1.5m0 0v1.5m-3.75-6.478a12.06 12.06 0 014.5 0m-4.5 0a12.06 12.06 0 00-4.5 0m4.5 0v-.75M12 12.75v-1.5m0 0v-1.5m0 0V9.75M12 9.75V9.75m0 3v1.5m0 0v1.5m0 0v1.5m0 0v1.5" /></svg>
+                    </div>
+                    <div>
+                        <p class="text-sm font-medium text-gray-500">Guru Inspiratif</p>
+                        <p id="stat-k2" class="text-3xl font-bold text-gray-900">0</p>
+                    </div>
+                </div>
+            </div>
+            <!-- Chart Placeholder -->
+            <div class="mt-8 bg-white rounded-2xl shadow-lg p-6">
+                <h3 class="text-lg font-medium text-gray-900 mb-4">Pendaftar per Kategori</h3>
+                <div id="chart-container" class="bg-gray-50 p-6 rounded-lg text-center text-gray-500">
+                    <svg class="w-16 h-16 mx-auto text-gray-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M3 13.125C3 12.504 3.504 12 4.125 12h2.25c.621 0 1.125.504 1.125 1.125v6.75C7.5 20.496 6.996 21 6.375 21h-2.25A1.125 1.125 0 013 19.875v-6.75zM9.75 8.625c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125v11.25c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V8.625zM16.5 4.125c0-.621.504-1.125 1.125-1.125h2.25C20.496 3 21 3.504 21 4.125v15.75c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V4.125z" /></svg>
+                    <p class="mt-2">Grafik statistik akan ditampilkan di sini.</p>
+                    <p class="text-xs">(Data akan diambil dari Google Spreadsheet)</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- ===== KONTEN TAB: FORMULIR PENDAFTARAN (Publik) ===== -->
+        <div id="main-content-form" class="main-content-div hidden">
+            <!-- VIEW 1: PENDAFTAR - PILIH KATEGORI -->
+            <div id="view-pendaftar-select">
+                <div class="max-w-2xl mx-auto bg-white rounded-2xl shadow-xl overflow-hidden">
+                    <div class="p-6 sm:p-8">
+                        <div class="text-center">
+                            <svg class="w-16 h-16 mx-auto text-indigo-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z" />
+                            </svg>
+                            <h3 class="mt-4 text-2xl font-bold text-gray-900">Pilih Kategori Pendaftaran</h3>
+                            <p class="mt-2 text-sm text-gray-600 mb-6">Pilih salah satu kategori yang ingin Anda ikuti.</p>
+                            
+                            <!-- DIV DAN SELECT YANG HILANG (DITAMBAHKAN) -->
+                            <div class="mb-6">
+                                <label for="kategori-select" class="sr-only">Pilih Kategori</label>
+                                <select id="kategori-select" class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-lg h-12 px-3">
+                                    <option value="" disabled selected>-- Pilih Kategori --</option>
+                                    <!-- Opsi akan diisi oleh JavaScript -->
+                                </select>
+                            </div>
+                            <!-- AKHIR DARI BLOK YANG DITAMBAHKAN -->
+                            
+                            <button id="btn-pilih-kategori" class="w-full flex justify-center items-center py-3 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition duration-150 ease-in-out">
+                                Lanjutkan Pendaftaran
+                                <svg class="w-5 h-5 ml-2" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" /></svg>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- VIEW 2: PENDAFTAR - FORMULIR PENDAFTARAN -->
+            <div id="view-pendaftar-form" class="hidden">
+                <div id="form-card" class="max-w-3xl mx-auto bg-white rounded-2xl shadow-xl overflow-hidden border-t-8 transition-all duration-500">
+                    <div class="p-6 sm:p-8">
+                        <!-- Tombol Kembali -->
+                        <button id="btn-kembali" class="mb-4 inline-flex items-center text-sm font-medium text-gray-600 hover:text-gray-900">
+                            <svg class="w-5 h-5 mr-1" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />
+                            </svg>
+                            Kembali Pilih Kategori
+                        </button>
+                        
+                        <!-- Judul Formulir Dinamis -->
+                        <h2 id="form-title" class="text-2xl sm:text-3xl font-bold text-gray-900 mb-2">Formulir Pendaftaran</h2>
+                        <p id="form-subtitle" class="text-base text-gray-600 mb-8">Silakan isi data berikut dengan lengkap dan benar.</p>
+
+                        <!-- ===== STEPPER BARU ===== -->
+                        <div id="stepper-container" class="mb-10 px-2 sm:px-6">
+                            <ol class="flex items-center w-full">
+                                <li id="stepper-step-1" class="stepper-step active" style="flex: 1;">
+                                    <span class="stepper-circle">1</span> <span class="stepper-label hidden sm:inline-block">Identitas</span>
+                                </li>
+                                <li class="stepper-line"></li>
+                                <li id="stepper-step-2" class="stepper-step" style="flex: 1;">
+                                    <span class="stepper-circle">2</span> <span class="stepper-label hidden sm:inline-block">Kepegawaian</span>
+                                </li>
+                                <li class="stepper-line"></li>
+                                <li id="stepper-step-3" class="stepper-step" style="flex: 1;">
+                                    <span class="stepper-circle">3</span> <span class="stepper-label hidden sm:inline-block">Unit Kerja</span>
+                                </li>
+                                <li class="stepper-line"></li>
+                                <li id="stepper-step-4" class="stepper-step" style="flex: 1;">
+                                    <span class="stepper-circle">4</span> <span class="stepper-label hidden sm:inline-block">Domisili</span>
+                                </li>
+                                <li class="stepper-line"></li>
+                                <li id="stepper-step-5" class="stepper-step" style="flex: 1;">
+                                    <span class="stepper-circle">5</span> <span class="stepper-label hidden sm:inline-block">Kontak</span>
+                                </li>
+                                <li class="stepper-line"></li>
+                                <li id="stepper-step-6" class="stepper-step" style="flex: 1;">
+                                    <span class="stepper-circle">6</span> <span class="stepper-label hidden sm:inline-block">Materi</span>
+                                </li>
+                            </ol>
+                        </div>
+                        <!-- ===== AKHIR STEPPER BARU ===== -->
+
+
+                        <!-- Formulir -->
+                        <form id="form-pendaftaran" class="space-y-6">
+                            
+                            <!-- Bagian 1: Identitas -->
+                            <div id="form-step-1" class="form-step space-y-6">
+                                <div class="form-section-header">
+                                    <svg class="w-6 h-6 text-indigo-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A1.5 1.5 0 0118 21.75H6a1.5 1.5 0 01-1.499-1.632z" /></svg>
+                                    <h3>Bagian 1: Identitas</h3>
+                                </div>
+                                <div>
+                                    <label for="nama-lengkap" class="block text-sm font-medium text-gray-700">Nama Lengkap (disertai gelar)</label>
+                                    <input type="text" id="nama-lengkap" name="nama-lengkap" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm h-10 px-3" required>
+                                </div>
+                                <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                                    <div>
+                                        <label for="tempat-lahir" class="block text-sm font-medium text-gray-700">Tempat Lahir</label>
+                                        <input type="text" id="tempat-lahir" name="tempat-lahir" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm h-10 px-3" required>
+                                    </div>
+                                    <div>
+                                        <label for="tanggal-lahir" class="block text-sm font-medium text-gray-700">Tanggal Lahir</label>
+                                        <input type="date" id="tanggal-lahir" name="tanggal-lahir" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm h-10 px-3" required>
+                                    </div>
+                                </div>
+                                <div>
+                                    <label for="nik" class="block text-sm font-medium text-gray-700">NIK (Nomor Induk Kependudukan)</label>
+                                    <input type="text" id="nik" name="nik" pattern="\d{16}" title="NIK harus 16 digit angka" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm h-10 px-3" required>
+                                </div>
+                            </div>
+
+                            <!-- Bagian 2: Kepegawaian -->
+                            <div id="form-step-2" class="form-step hidden space-y-6">
+                                <div class="form-section-header">
+                                    <svg class="w-6 h-6 text-indigo-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" /></svg>
+                                    <h3>Bagian 2: Kepegawaian</h3>
+                                </div>
+                                <div>
+                                    <label for="status-kepegawaian" class="block text-sm font-medium text-gray-700">Status Kepegawaian</label>
+                                    <select id="status-kepegawaian" name="status-kepegawaian" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm h-10 px-3" required>
+                                        <option value="" disabled selected>-- Pilih Status --</option>
+                                        <option value="ASN PNS">ASN PNS</option>
+                                        <option value="ASN PPPK">ASN PPPK</option>
+                                        <option value="Non ASN">Non ASN</option>
+                                    </select>
+                                </div>
+                                <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                                    <div>
+                                        <label for="nip" class="block text-sm font-medium text-gray-700">NIP</label>
+                                        <input type="text" id="nip" name="nip" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm h-10 px-3" placeholder="Isi tanda strip (-) jika tidak memiliki" required>
+                                    </div>
+                                    <div>
+                                        <label for="nuptk" class="block text-sm font-medium text-gray-700">NUPTK</label>
+                                        <input type="text" id="nuptk" name="nuptk" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm h-10 px-3">
+                                    </div>
+                                </div>
+                                <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                                    <div>
+                                        <label for="pangkat-gol" class="block text-sm font-medium text-gray-700">Pangkat, Gol/Ruang</label>
+                                        <select id="pangkat-gol" name="pangkat-gol" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm h-10 px-3">
+                                            <option value="" disabled selected>-- Pilih Pangkat/Golongan --</option>
+                                            <option value="Juru Muda, I/a">Juru Muda, I/a</option>
+                                            <option value="Juru Muda Tingkat I, I/b">Juru Muda Tingkat I, I/b</option>
+                                            <option value="Juru, I/c">Juru, I/c</option>
+                                            <option value="Juru Tingkat I, I/d">Juru Tingkat I, I/d</option>
+                                            <option value="Pengatur Muda, II/a">Pengatur Muda, II/a</option>
+                                            <option value="Pengatur Muda Tingkat I, II/b">Pengatur Muda Tingkat I, II/b</option>
+                                            <option value="Pengatur Muda, II/c">Pengatur Muda, II/c</option>
+                                            <option value="Pengatur Muda, II/d">Pengatur Muda, II/d</option>
+                                            <option value="Penata Muda, III/a">Penata Muda, III/a</option>
+                                            <option value="Penata Muda Tingkat I, III/b">Penata Muda Tingkat I, III/b</option>
+                                            <option value="Penata, III/c">Penata, III/c</option>
+                                            <option value="Penata Tingkat I, III/d">Penata Tingkat I, III/d</option>
+                                            <option value="Pembina, IV/a">Pembina, IV/a</option>
+                                            <option value="Pembina Tingkat I, IV/b">Pembina Tingkat I, IV/b</option>
+                                            <option value="Pembina Utama Muda, IV/c">Pembina Utama Muda, IV/c</option>
+                                            <option value="Pembina Utama Madya, IV/d">Pembina Utama Madya, IV/d</option>
+                                            <option value="Pembina Utama, IV/e">Pembina Utama, IV/e</option>
+                                            <option value="Belum Memiliki Pangkat/Gol">Belum Memiliki Pangkat/Gol</option>
+                                        </select>
+                                    </div>
+                                    <div>
+                                        <label for="jabatan-fungsional" class="block text-sm font-medium text-gray-700">Jabatan Fungsional</label>
+                                        <select id="jabatan-fungsional" name="jabatan-fungsional" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm h-10 px-3">
+                                            <option value="" disabled selected>-- Pilih Jabatan --</option>
+                                            <option value="Guru Ahli Pertama">Guru Ahli Pertama</option>
+                                            <option value="Guru Ahli Muda">Guru Ahli Muda</option>
+                                            <option value="Guru Ahli Madya">Guru Ahli Madya</option>
+                                            <option value="Guru Ahli Utama">Guru Ahli Utama</option>
+                                            <option value="Belum Memiliki Jabatan Fungsional">Belum Memiliki Jabatan Fungsional</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Bagian 3: Unit Kerja -->
+                            <div id="form-step-3" class="form-step hidden space-y-6">
+                                <div class="form-section-header">
+                                    <svg class="w-6 h-6 text-indigo-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 21h16.5M4.5 3h15M5.25 3v18m13.5-18v18M9 6.75h6.75M9 11.25h6.75M9 15.75h6.75M9 20.25h6.75" /></svg>
+                                    <h3>Bagian 3: Unit Kerja</h3>
+                                </div>
+                                <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                                    <div>
+                                        <label for="jenjang" class="block text-sm font-medium text-gray-700">Jenjang</label>
+                                        <select id="jenjang" name="jenjang" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm h-10 px-3" required>
+                                            <option value="" disabled selected>-- Pilih Jenjang --</option>
+                                            <option value="PAUD">PAUD</option>
+                                            <option value="SD">SD</option>
+                                            <option value="SMP/Sederajat">SMP/Sederajat</option>
+                                            <option value="SMA/SMK/Sederajat">SMA/SMK/Sederajat</option>
+                                        </select>
+                                    </div>
+                                    <div>
+                                        <label for="nama-satuan-pendidikan" class="block text-sm font-medium text-gray-700">Nama Satuan Pendidikan</label>
+                                        <input type="text" id="nama-satuan-pendidikan" name="nama-satuan-pendidikan" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm h-10 px-3" required>
+                                    </div>
+                                </div>
+                                <div>
+                                    <label for="alamat-satuan-pendidikan" class="block text-sm font-medium text-gray-700">Alamat Satuan Pendidikan</label>
+                                    <input type="text" id="alamat-satuan-pendidikan" name="alamat-satuan-pendidikan" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm h-10 px-3" required>
+                                </div>
+                                <div>
+                                    <label for="kecamatan-satuan-pendidikan" class="block text-sm font-medium text-gray-700">Kecamatan Satuan Pendidikan</label>
+                                    <select id="kecamatan-satuan-pendidikan" name="kecamatan-satuan-pendidikan" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm h-10 px-3" required>
+                                        <option value="" disabled selected>-- Pilih Kecamatan --</option>
+                                        <option value="Angsana">Angsana</option>
+                                        <option value="Banjar">Banjar</option>
+                                        <option value="Bojong">Bojong</option>
+                                        <option value="Cadasari">Cadasari</option>
+                                        <option value="Carita">Carita</option>
+                                        <option value="Cibaliung">Cibaliung</option>
+                                        <option value="Cibitung">Cibitung</option>
+                                        <option value="Cigeulis">Cigeulis</option>
+                                        <option value="Cikedal">Cikedal</option>
+                                        <option value="Cikeusik">Cikeusik</option>
+                                        <option value="Cimanggu">Cimanggu</option>
+                                        <option value="Cimanuk">Cimanuk</option>
+                                        <option value="Cipeucang">Cipeucang</option>
+                                        <option value="Cisata">Cisata</option>
+                                        <option value="Jiput">Jiput</option>
+                                        <option value="Kaduhejo">Kaduhejo</option>
+                                        <option value="Karang Tanjung">Karang Tanjung</option>
+                                        <option value="Koroncong">Koroncong</option>
+                                        <option value="Labuan">Labuan</option>
+                                        <option value="Majasari">Majasari</option>
+                                        <option value="Mandalawangi">Mandalawangi</option>
+                                        <option value="Mekarjaya">Mekarjaya</option>
+                                        <option value="Menes">Menes</option>
+                                        <option value="Munjul">Munjul</option>
+                                        <option value="Pagelaran">Pagelaran</option>
+                                        <option value="Pandeglang">Pandeglang</option>
+                                        <option value="Panimbang">Panimbang</option>
+                                        <option value="Patia">Patia</option>
+                                        <option value="Picung">Picung</option>
+                                        <option value="Pulosari">Pulosari</option>
+                                        <option value="Saketi">Saketi</option>
+                                        <option value="Sindangresmi">Sindangresmi</option>
+                                        <option value="Sobang">Sobang</option>
+                                        <option value="Sukaresmi">Sukaresmi</option>
+                                        <option value="Sumur">Sumur</option>
+                                    </select>
+                                </div>
+                            </div>
+                            
+                            <!-- Bagian 4: Tempat Tinggal -->
+                            <div id="form-step-4" class="form-step hidden space-y-6">
+                                <div class="form-section-header">
+                                    <svg class="w-6 h-6 text-indigo-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 12l8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25" /></svg>
+                                    <h3>Bagian 4: Tempat Tinggal</h3>
+                                </div>
+                                <div>
+                                    <label for="alamat-tempat-tinggal" class="block text-sm font-medium text-gray-700">Alamat Tempat Tinggal</label>
+                                    <input type="text" id="alamat-tempat-tinggal" name="alamat-tempat-tinggal" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm h-10 px-3" required>
+                                </div>
+                                <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                                    <div>
+                                        <label for="kecamatan-tempat-tinggal" class="block text-sm font-medium text-gray-700">Kecamatan Tempat Tinggal</label>
+                                        <select id="kecamatan-tempat-tinggal" name="kecamatan-tempat-tinggal" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm h-10 px-3" required>
+                                            <option value="" disabled selected>-- Pilih Kecamatan --</option>
+                                            <option value="Angsana">Angsana</option>
+                                            <option value="Banjar">Banjar</option>
+                                            <option value="Bojong">Bojong</option>
+                                            <option value="Cadasari">Cadasari</option>
+                                            <option value="Carita">Carita</option>
+                                            <option value="Cibaliung">Cibaliung</option>
+                                            <option value="Cibitung">Cibitung</option>
+                                            <option value="Cigeulis">Cigeulis</option>
+                                            <option value="Cikedal">Cikedal</option>
+                                            <option value="Cikeusik">Cikeusik</option>
+                                            <option value="Cimanggu">Cimanggu</option>
+                                            <option value="Cimanuk">Cimanuk</option>
+                                            <option value="Cipeucang">Cipeucang</option>
+                                            <option value="Cisata">Cisata</option>
+                                            <option value="Jiput">Jiput</option>
+                                            <option value="Kaduhejo">Kaduhejo</option>
+                                            <option value="Karang Tanjung">Karang Tanjung</option>
+                                            <option value="Koroncong">Koroncong</option>
+                                            <option value="Labuan">Labuan</option>
+                                            <option value="Majasari">Majasari</option>
+                                            <option value="Mandalawangi">Mandalawangi</option>
+                                            <option value="Mekarjaya">Mekarjaya</option>
+                                            <option value="Menes">Menes</option>
+                                            <option value="Munjul">Munjul</option>
+                                            <option value="Pagelaran">Pagelaran</option>
+                                            <option value="Pandeglang">Pandeglang</option>
+                                            <option value="Panimbang">Panimbang</option>
+                                            <option value="Patia">Patia</option>
+                                            <option value="Picung">Picung</option>
+                                            <option value="Pulosari">Pulosari</option>
+                                            <option value="Saketi">Saketi</option>
+                                            <option value="Sindangresmi">Sindangresmi</option>
+                                            <option value="Sobang">Sobang</option>
+                                            <option value="Sukaresmi">Sukaresmi</option>
+                                            <option value="Sumur">Sumur</option>
+                                        </select>
+                                    </div>
+                                    <div>
+                                        <label for="kabupaten-kota-tempat-tinggal" class="block text-sm font-medium text-gray-700">Kabupaten/Kota Tempat Tinggal</label>
+                                        <select id="kabupaten-kota-tempat-tinggal" name="kabupaten-kota-tempat-tinggal" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm h-10 px-3" required>
+                                            <option value="" disabled selected>-- Pilih Kabupaten/Kota --</option>
+                                            <option value="Kabupaten Lebak">Kabupaten Lebak</option>
+                                            <option value="Kabupaten Pandeglang">Kabupaten Pandeglang</option>
+                                            <option value="Kabupaten Serang">Kabupaten Serang</option>
+                                            <option value="Kabupaten Tangerang">Kabupaten Tangerang</option>
+                                            <option value="Kota Cilegon">Kota Cilegon</option>
+                                            <option value="Kota Serang">Kota Serang</option>
+                                            <option value="Kota Tangerang">Kota Tangerang</option>
+                                            <option value="Kota Tangerang Selatan">Kota Tangerang Selatan</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Bagian 5: Kontak dan Korespondensi -->
+                            <div id="form-step-5" class="form-step hidden space-y-6">
+                                <div class="form-section-header">
+                                    <svg class="w-6 h-6 text-indigo-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m21.75 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m21.75 0h-21.75m21.75 0v10.5M4.5 6.75v10.5m0-10.5l7.125 5.25L19.5 6.75" /></svg>
+                                    <h3>Bagian 5: Kontak dan Korespondensi</h3>
+                                </div>
+                                <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                                    <div>
+                                        <label for="nomor-whatsapp" class="block text-sm font-medium text-gray-700">Nomor WhatsApp</label>
+                                        <input type="tel" id="nomor-whatsapp" name="nomor-whatsapp" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm h-10 px-3" placeholder="Contoh: 08123456789" required>
+                                    </div>
+                                    <div>
+                                        <label for="email-personal" class="block text-sm font-medium text-gray-700">Email Personal Aktif</label>
+                                        <input type="email" id="email-personal" name="email-personal" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm h-10 px-3" placeholder="Untuk menerima salinan PDF" required>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Bagian 6: Materi Lomba (DIUBAH UNTUK TAUTAN DRIVE) -->
+                            <div id="form-step-6" class="form-step hidden space-y-6">
+                                <div class="form-section-header">
+                                    <svg class="w-6 h-6 text-indigo-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L6.832 19.82a4.5 4.5 0 01-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 011.13-1.897L16.863 4.487zm0 0L19.5 7.125" /></svg>
+                                    <h3>Bagian 6: Materi Lomba</h3>
+                                </div>
+                                <div>
+                                    <label for="deskripsi" class="flex items-center text-sm font-medium text-gray-700">
+                                        Deskripsi Singkat / Esai Inovasi
+                                    </label>
+                                    <textarea id="deskripsi" name="deskripsi" rows="5" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm p-3" placeholder="Jelaskan secara singkat inovasi, dedikasi, atau karya Anda sesuai kategori yang dipilih..." required></textarea>
+                                </div>
+                                
+                                <!-- START: BLOK YANG DIPERBAIKI -->
+                                <div>
+                                    <label for="tautan-video" class="block text-sm font-medium text-gray-700">Tautan Video Karya (Wajib: Akses Publik)</label>
+                                    <p class="text-xs text-red-600 mb-2 font-semibold">
+                                        ⚠️ <strong>PENTING:</strong> Pastikan Tautan Google Drive Anda sudah disetel agar <strong>Dapat Dilihat oleh siapa saja yang memiliki tautan (Public/Anyone with the link)</strong>. Jika akses dikunci, panitia tidak dapat menilai.
+                                    </p>
+                                    <input type="url" id="tautan-video" name="tautan-video" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm h-10 px-3" placeholder="Contoh: https://drive.google.com/file/d/1a2b3c4d5e6f7g8h9i0j/view?usp=sharing" required>
+                                </div>
+                                <!-- END: BLOK YANG DIPERBAIKI -->
+                                
+                                <!-- Persetujuan -->
+                                <div class="flex items-start pt-4 border-t">
+                                    <div class="flex items-center h-5">
+                                        <input id="persetujuan" name="persetujuan" type="checkbox" class="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300 rounded" required>
+                                    </div>
+                                    <div class="ml-3 text-sm">
+                                        <label for="persetujuan" class="font-medium text-gray-700">Persetujuan</label>
+                                        <p class="text-gray-500">Saya menyatakan bahwa data yang saya kirimkan adalah benar dan tautan video yang saya unggah adalah karya asli saya.</p>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- ===== Tombol Navigasi Step ===== -->
+                            <div id="form-navigation" class="mt-10 pt-6 border-t border-gray-200 flex justify-between items-center">
+                                <button type="button" id="btn-prev" class="btn-form-nav btn-prev hidden">
+                                    <svg class="w-5 h-5 mr-2" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18" /></svg>
+                                    Kembali
+                                </button>
+                                <!-- Tombol ini ada tapi di-hide agar justify-between berfungsi -->
+                                <span id="btn-prev-placeholder" class=""></span>
+                                
+                                <button type="button" id="btn-next" class="btn-form-nav btn-next">
+                                    Selanjutnya
+                                    <svg class="w-5 h-5 ml-2" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" /></svg>
+                                </button>
+                                <button type="submit" id="submit-form-btn" class="btn-form-nav btn-submit hidden">
+                                    <svg class="w-5 h-5 mr-2 -ml-1" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" /></svg>
+                                    Kirim Pendaftaran
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ===== KONTEN TAB: JURI (Protected) ===== -->
+        <div id="main-content-juri" class="main-content-div hidden">
+            <!-- Pesan Login -->
+            <div id="juri-login-prompt" class="text-center bg-white p-10 rounded-2xl shadow-lg">
+                <svg class="w-16 h-16 mx-auto text-yellow-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M16.5 10.5V6.75a4.5 4.5 0 10-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H6.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z" /></svg>
+                <h3 class="mt-4 text-2xl font-bold text-gray-900">Akses Terbatas</h3>
+                <p class="mt-2 text-gray-600">Anda harus login sebagai 'Juri' untuk mengakses halaman ini.</p>
+                <button id="juri-login-btn" class="mt-6 inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                    <svg class="w-5 h-5 mr-2 -ml-1" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1" /></svg>
+                    Login sebagai Juri
+                </button>
+            </div>
+            
+            <!-- Konten Juri Sebenarnya (Hidden by default) -->
+            <div id="juri-content-wrapper" class="hidden">
+                <h2 class="text-3xl font-bold text-gray-900 mb-6">Dasbor Juri - Data Submisi</h2>
+                <div class="bg-white rounded-2xl shadow-lg overflow-hidden">
+                    <!-- Filter dan Aksi -->
+                    <div class="p-5 border-b border-gray-200 flex flex-col sm:flex-row justify-between items-center space-y-4 sm:space-y-0">
+                        <div class="flex items-center space-x-2">
+                            <svg class="w-5 h-5 text-gray-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3c2.755 0 5.455.232 8.083.678.533.09.917.556.917 1.096v1.044a2.25 2.25 0 01-.659 1.591l-5.432 5.432a2.25 2.25 0 00-.659 1.591v2.927a2.25 2.25 0 01-1.244 2.013L9.75 21v-6.572a2.25 2.25 0 00-.659-1.591L3.659 7.409A2.25 2.25 0 013 5.818V4.774c0-.54.384-1.006.917-1.096A48.32 48.32 0 0112 3z" /></svg>
+                            <label for="juri-filter-kategori" class="text-sm font-medium text-gray-700">Filter Kategori:</label>
+                            <select id="juri-filter-kategori" class="rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm h-10">
+                                <option value="semua" selected>Semua Kategori</option>
+                                <!-- Opsi kategori akan diisi oleh JavaScript -->
+                            </select>
+                        </div>
+                        <div class="flex space-x-3">
+                            <button id="juri-btn-unduh-data" class="inline-flex items-center px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                                <svg class="w-5 h-5 mr-2" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3" /></svg>
+                                Unduh Data (CSV)
+                            </button>
+                        </div>
+                    </div>
+                    <!-- Tabel Submisi Juri -->
+                    <div class="overflow-x-auto">
+                        <table id="juri-submisi-table" class="min-w-full divide-y divide-gray-200">
+                            <thead class="bg-gray-50">
+                                <tr>
+                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Nama Pendaftar</th>
+                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Kategori</th>
+                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Unit Kerja</th>
+                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Tgl Submisi</th>
+                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Aksi</th>
+                                </tr>
+                            </thead>
+                            <tbody class="bg-white divide-y divide-gray-200">
+                                <!-- Data baris akan diisi oleh JavaScript -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ===== KONTEN TAB: ADMIN (Protected) ===== -->
+        <div id="main-content-admin" class="main-content-div hidden">
+            <!-- Pesan Login -->
+            <div id="admin-login-prompt" class="text-center bg-white p-10 rounded-2xl shadow-lg">
+                <svg class="w-16 h-16 mx-auto text-yellow-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M16.5 10.5V6.75a4.5 4.5 0 10-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H6.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z" /></svg>
+                <h3 class="mt-4 text-2xl font-bold text-gray-900">Akses Terbatas</h3>
+                <p class="mt-2 text-gray-600">Anda harus login sebagai 'Admin' untuk mengakses halaman ini.</p>
+                <button id="admin-login-btn" class="mt-6 inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                    <svg class="w-5 h-5 mr-2 -ml-1" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1" /></svg>
+                    Login sebagai Admin
+                </button>
+            </div>
+            
+            <!-- Konten Admin Sebenarnya (Hidden by default) -->
+            <div id="admin-content-wrapper" class="hidden">
+                <h2 class="text-3xl font-bold text-gray-900 mb-6">Dasbor Admin</h2>
+                <!-- Navigasi Tab Internal Admin -->
+                <div class="mb-6">
+                    <div class="sm:hidden">
+                        <label for="admin-tabs-mobile" class="sr-only">Pilih tab</label>
+                        <select id="admin-tabs-mobile" name="admin-tabs-mobile" class="block w-full rounded-md border-gray-300 focus:border-indigo-500 focus:ring-indigo-500">
+                            <option value="admin-stats" selected>Statistik</option>
+                            <option value="admin-submisi">Data Submisi</option>
+                            <option value_id="admin-users" id="admin-tabs-mobile-option-users" class="hidden">Manajemen User</option>
+                        </select>
+                    </div>
+                    <div class="hidden sm:block">
+                        <div class="border-b border-gray-200">
+                            <nav id="admin-tab-nav" class="-mb-px flex space-x-8" aria-label="Tabs">
+                                <button id="admin-tab-btn-stats" class="admin-tab-btn border-indigo-500 text-indigo-600 whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm flex items-center" data-tab="admin-stats">
+                                    <svg class="w-4 h-4 mr-1.5 text-gray-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0h2m4 0h2m-6 0V9a2 2 0 012-2h2a2 2 0 012 2v10m0 0v-6a2 2 0 00-2-2h-2a2 2 0 00-2 2v6m0 0h-2" /></svg>
+                                    Statistik
+                                </button>
+                                <button id="admin-tab-btn-submisi" class="admin-tab-btn border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm flex items-center" data-tab="admin-submisi">
+                                    <svg class="w-4 h-4 mr-1.5 text-gray-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" /></svg>
+                                    Data Submisi
+                                </button>
+                                <!-- Tab Super Admin (Baru) -->
+                                <button id="admin-tab-btn-users" class="admin-tab-btn hidden border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm flex items-center" data-tab="admin-users">
+                                    <svg class="w-4 h-4 mr-1.5 text-gray-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" /></svg>
+                                    Manajemen User
+                                </button>
+                            </nav>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Konten Tab Statistik (Admin Internal) -->
+                <div id="admin-stats" class="admin-content-div">
+                    <!-- Ini adalah duplikat dari stats di dashboard publik, tapi bisa diisi data yang lebih detail -->
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                        <div class="bg-white rounded-2xl shadow-lg p-6 flex items-center space-x-4">
+                            <div class="bg-indigo-100 rounded-full p-3">
+                                <svg class="w-8 h-8 text-indigo-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19.128a9.38 9.38 0 002.625.372 9.337 9.337 0 004.121-.952 4.125 4.125 0 00-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.003c0 1.113.285 2.16.786 3.07M15 19.128c-1.113 0-2.16-.285-3.07-.786v.003c-1.113 0-2.16.285-3.07.786m6.14 0v.003c1.113 0 2.16.285 3.07.786M15 19.128c1.113 0 2.16.285 3.07.786M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M9 12a3 3 0 11-6 0 3 3 0 016 0zM9 12c0-1.657 1.343-3 3-3s3 1.343 3 3-1.343 3-3 3-3-1.343-3-3zM9 12v9m0 0H6m3 0h3m-3 0v-6m0 6V9" /></svg>
+                            </div>
+                            <div>
+                                <p class="text-sm font-medium text-gray-500">Total Pendaftar</p>
+                                <p id="admin-stat-total" class="text-3xl font-bold text-gray-900">0</p>
+                            </div>
+                        </div>
+                        <div class="bg-white rounded-2xl shadow-lg p-6 flex items-center space-x-4">
+                           <div class="bg-green-100 rounded-full p-3">
+                                <svg class="w-8 h-8 text-green-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09zM18.259 8.715L18 9.75l-.259-1.035a3.375 3.375 0 00-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 002.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 002.456 2.456L21.75 6l-1.035.259a3.375 3.375 0 00-2.456 2.456zM16.894 20.567L16.5 21.75l-.394-1.183a2.25 2.25 0 00-1.423-1.423L13.5 18.75l1.183-.394a2.25 2.25 0 001.423-1.423l.394-1.183.394 1.183a2.25 2.25 0 001.423 1.423l1.183.394-1.183.394a2.25 2.25 0 00-1.423 1.423z" /></svg>
+                            </div>
+                            <div>
+                                <p class="text-sm font-medium text-gray-500">Guru Inovatif</p>
+                                <p id="admin-stat-k1" class="text-3xl font-bold text-gray-900">0</p>
+                            </div>
+                        </div>
+                        <div class="bg-white rounded-2xl shadow-lg p-6 flex items-center space-x-4">
+                            <div class="bg-blue-100 rounded-full p-3">
+                                <svg class="w-8 h-8 text-blue-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M12 18v-5.25m0 0a6.01 6.01 0 001.5-.189m-1.5.189a6.01 6.01 0 01-1.5-.189m3.75 7.478a12.06 12.06 0 01-4.5 0m3.75 0a12.06 12.06 0 004.5 0m-4.5 0v.75M12 12.75v-1.5m0 0v-1.5m0 0V9.75m0 0V9.75M12 12.75v1.5m0 0v1.5m0 0v1.5m0 0v1.5m-3.75-6.478a12.06 12.06 0 014.5 0m-4.5 0a12.06 12.06 0 00-4.5 0m4.5 0v-.75M12 12.75v-1.5m0 0v-1.5m0 0V9.75M12 9.75V9.75m0 3v1.5m0 0v1.5m0 0v1.5m0 0v1.5" /></svg>
+                            </div>
+                            <div>
+                                <p class="text-sm font-medium text-gray-500">Guru Inspiratif</p>
+                                <p id="admin-stat-k2" class="text-3xl font-bold text-gray-900">0</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Konten Tab Submisi (Admin Internal) -->
+                <div id="admin-submisi" class="admin-content-div hidden">
+                    <div class="bg-white rounded-2xl shadow-lg overflow-hidden">
+                        <!-- Filter dan Aksi -->
+                        <div class="p-5 border-b border-gray-200 flex flex-col sm:flex-row justify-between items-center space-y-4 sm:space-y-0">
+                            <div class="flex items-center space-x-2">
+                                <svg class="w-5 h-5 text-gray-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3c2.755 0 5.455.232 8.083.678.533.09.917.556.917 1.096v1.044a2.25 2.25 0 01-.659 1.591l-5.432 5.432a2.25 2.25 0 00-.659 1.591v2.927a2.25 2.25 0 01-1.244 2.013L9.75 21v-6.572a2.25 2.25 0 00-.659-1.591L3.659 7.409A2.25 2.25 0 013 5.818V4.774c0-.54.384-1.006.917-1.096A48.32 48.32 0 0112 3z" /></svg>
+                                <label for="admin-filter-kategori" class="text-sm font-medium text-gray-700">Filter Kategori:</label>
+                                <select id="admin-filter-kategori" class="rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm h-10">
+                                    <option value="semua" selected>Semua Kategori</option>
+                                    <!-- Opsi kategori akan diisi oleh JavaScript -->
+                                </select>
+                            </div>
+                            <div class="flex space-x-3">
+                                <button id="admin-btn-unduh-data" class="inline-flex items-center px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                                    <svg class="w-5 h-5 mr-2" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3" /></svg>
+                                    Unduh Data (CSV)
+                                </button>
+                                <button id="admin-btn-unduh-video" class="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                                    <svg class="w-5 h-5 mr-2" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" /></svg>
+                                    Unduh Semua Video (.zip)
+                                </button>
+                            </div>
+                        </div>
+                        <!-- Tabel Submisi Admin -->
+                        <div class="overflow-x-auto">
+                            <table id="admin-submisi-table" class="min-w-full divide-y divide-gray-200">
+                                <thead class="bg-gray-50">
+                                    <tr>
+                                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Nama Pendaftar</th>
+                                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Kategori</th>
+                                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Unit Kerja</th>
+                                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Tgl Submisi</th>
+                                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Aksi</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="bg-white divide-y divide-gray-200">
+                                    <!-- Data baris akan diisi oleh JavaScript -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Konten Tab Manajemen User (Super Admin) - BARU -->
+                <div id="admin-users" class="admin-content-div hidden">
+                    <h3 class="text-xl font-semibold text-gray-900 mb-4">Manajemen Akun Juri & Admin</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <!-- Form Tambah Akun -->
+                        <div class="bg-white rounded-2xl shadow-lg p-6">
+                            <h4 class="text-lg font-medium text-gray-900 mb-4">Tambah Akun Baru</h4>
+                            <form id="form-tambah-akun" class="space-y-4">
+                                <div>
+                                    <label for="new-username" class="block text-sm font-medium text-gray-700">Username Baru</label>
+                                    <input type="text" id="new-username" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm h-10 px-3" required>
+                                </div>
+                                <div>
+                                    <label for="new-password" class="block text-sm font-medium text-gray-700">Password Baru</label>
+                                    <input type="text" id="new-password" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm h-10 px-3" placeholder="Disarankan acak" required>
+                                </div>
+                                <div>
+                                    <label for="new-role" class="block text-sm font-medium text-gray-700">Peran</label>
+                                    <select id="new-role" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm h-10 px-3">
+                                        <option value="juri">Juri</option>
+                                        <option value="admin">Admin</option>
+                                    </select>
+                                </div>
+                                <button type="submit" class="w-full flex justify-center items-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                                    <svg class="w-5 h-5 mr-2" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" /></svg>
+                                    Tambah Akun
+                                </button>
+                            </form>
+                        </div>
+                        <!-- Daftar Akun (Simulasi) -->
+                        <div class="bg-white rounded-2xl shadow-lg p-6">
+                            <h4 class="text-lg font-medium text-gray-900 mb-4">Daftar Akun Saat Ini</h4>
+                            <ul id="user-list" class="divide-y divide-gray-200">
+                                <!-- Akan diisi oleh JS -->
+                            </ul>
+                        </div>
+                    </div>
+                </div> <!-- End of admin-users -->
+
+            </div>
+        </div>
+    </main> <!-- Penutup <main> yang benar -->
+
+    
+<!-- ===== MODAL PERINGATAN AKSES VIDEO (GANTIKAN alert()) ===== -->
+<div id="video-access-modal" class="hidden fixed inset-0 bg-gray-600 bg-opacity-60 flex items-center justify-center z-50 transition-opacity" aria-labelledby="video-access-modal-title" role="dialog" aria-modal="true">
+  <div class="bg-white rounded-lg shadow-xl transform transition-all sm:my-8 sm:max-w-2xl sm:w-full">
+    <div class="px-6 py-5">
+      <div class="flex items-start">
+        <div class="flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full bg-yellow-100">
+          <!-- Icon peringatan -->
+          <svg class="h-6 w-6 text-yellow-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v4m0 4h.01M4.5 19.5L12 3l7.5 16.5H4.5z" />
+          </svg>
+        </div>
+        <div class="ml-4 text-left w-full">
+          <h3 class="text-lg leading-6 font-medium text-gray-900" id="video-access-modal-title">⚠️ PERHATIAN PENTING SEBELUM LANJUT</h3>
+          <div class="mt-3 text-sm text-gray-600 space-y-2">
+            <p>Anda harus mengunggah video karya Anda ke Google Drive pribadi dan menyalin tautan (link) ke dalam formulir.</p>
+            <p>Pastikan <strong>SEBELUM MENGISI</strong> tautan, akses tautan video Anda sudah disetel ke <strong>&quot;Siapa saja yang memiliki tautan dapat melihat&quot;</strong>.</p>
+            <p>Jika akses dikunci, panitia tidak akan bisa menilai karya Anda.</p>
+          </div>
+        </div>
+        <button id="video-access-modal-close-x" type="button" class="ml-4 text-gray-400 hover:text-gray-600">
+          <span class="sr-only">Tutup</span>
+          <svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" /></svg>
+        </button>
+      </div>
+    </div>
+    <div class="bg-gray-50 px-6 py-4 sm:flex sm:flex-row-reverse rounded-b-lg">
+      <button id="video-access-modal-ok" type="button" class="w-full inline-flex justify-center items-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-indigo-600 text-base font-medium text-white hover:bg-indigo-700 sm:ml-3 sm:w-auto sm:text-sm">
+        OK, saya mengerti
+      </button>
+      <button id="video-access-modal-cancel" type="button" class="mt-3 w-full inline-flex justify-center items-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 sm:mt-0 sm:w-auto sm:text-sm">
+        Batal
+      </button>
+    </div>
+  </div>
+</div>
+<!-- ===== AKHIR MODAL PERINGATAN AKSES VIDEO ===== -->
+<!-- ===== MODAL SUKSES (DITAMBAHKAN KEMBALI) ===== -->
+    <div id="success-modal" class="hidden fixed inset-0 bg-gray-600 bg-opacity-75 flex items-center justify-center z-50 transition-opacity" aria-labelledby="success-modal-title" role="dialog" aria-modal="true">
+        <div class="bg-white rounded-lg shadow-xl transform transition-all sm:my-8 sm:max-w-md sm:w-full p-6">
+            <div class="flex items-center justify-center">
+                <div class="mx-auto flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full bg-green-100 sm:mx-0 sm:h-10 sm:w-10">
+                    <svg class="h-6 w-6 text-green-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" aria-hidden="true">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
+                    </svg>
+                </div>
+                <div class="ml-4 text-left">
+                    <h3 class="text-lg leading-6 font-medium text-gray-900" id="success-modal-title">Pendaftaran Berhasil</h3>
+                    <p class="text-sm text-gray-500">Data Anda telah berhasil dikirimkan. Terima kasih.</p>
+                </div>
+            </div>
+            <div class="mt-5 sm:mt-6">
+                <button id="modal-close-btn" type="button" class="inline-flex justify-center items-center w-full rounded-md border border-transparent shadow-sm px-4 py-2 bg-indigo-600 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:text-sm">
+                    <svg class="w-5 h-5 mr-2 -ml-1" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" /></svg>
+                    Tutup
+                </button>
+            </div>
+        </div>
+    </div>
+    <!-- ===== AKHIR MODAL SUKSES ===== -->
+
+    <!-- ===== MODAL LOGIN (DITAMBAHKAN KEMBALI) ===== -->
+    <div id="login-modal" class="hidden fixed inset-0 bg-gray-600 bg-opacity-75 flex items-center justify-center z-50 transition-opacity" aria-labelledby="login-modal-title" role="dialog" aria-modal="true">
+        <div class="bg-white rounded-lg shadow-xl transform transition-all sm:my-8 sm:max-w-lg sm:w-full">
+            <form id="login-form">
+                <div class="px-6 pt-5 pb-4">
+                    <div class="flex items-start">
+                        <div class="mx-auto flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full bg-indigo-100 sm:mx-0 sm:h-10 sm:w-10">
+                            <svg class="h-6 w-6 text-indigo-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M16.5 10.5V6.75a4.5 4.5 0 10-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H6.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z" />
+                            </svg>
+                        </div>
+                        <div class="ml-4 mt-0 text-left">
+                            <h3 class="text-lg leading-6 font-medium text-gray-900" id="login-modal-title">Login</h3>
+                            <p class="text-sm text-gray-500">Silakan masukkan username dan password Anda.</p>
+                        </div>
+                        <button id="login-close-btn-x" type="button" class="ml-auto text-gray-400 hover:text-gray-500">
+                            <span class="sr-only">Tutup</span>
+                            <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" /></svg>
+                        </button>
+                    </div>
+                    <div class="mt-6 space-y-4">
+                        <div>
+                            <label for="login-username" class="block text-sm font-medium text-gray-700">Username</label>
+                            <input type="text" id="login-username" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm h-10 px-3" required>
+                        </div>
+                        <div>
+                            <label for="login-password" class="block text-sm font-medium text-gray-700">Password</label>
+                            <input type="password" id="login-password" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm h-10 px-3" required>
+                        </div>
+                        <div id="login-error" class="hidden text-sm text-red-600">
+                            Username atau password salah.
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-gray-50 px-6 py-4 sm:flex sm:flex-row-reverse rounded-b-lg">
+                    <button id="login-btn" type="submit" class="w-full inline-flex justify-center items-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-indigo-600 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:ml-3 sm:w-auto sm:text-sm">
+                        <svg class="w-5 h-5 mr-2 -ml-1" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1" /></svg>
+                        Login
+                    </button>
+                    <button id="login-cancel-btn" type="button" class="mt-3 w-full inline-flex justify-center items-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:w-auto sm:text-sm">
+                        Batal
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <!-- ===== AKHIR MODAL LOGIN ===== -->
+
+
+    <!-- ===== SCRIPT UTAMA ===== -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            
+            // ===== KONFIGURASI GOOGLE APPS SCRIPT =====
+            const GAS_WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbwLz26fDChTo3ag6mmXLsaIPBFNkRORhojyjsAK-Rx1Bg0ftrQo-qR0at28lazxg8m2sA/exec';
+            
+            // ===== DATA MASTER =====
+            const KATEGORI_LIST = [
+                'Guru Inovatif', 'Guru Kreatif', 'Guru Inspiratif', 'Guru Dedikasi Desa Tertinggal',
+                'Guru Menulis Karya Ilmiah', 'Guru Menulis Fiksi', 'Guru Pencetak Sang Juara Olahraga',
+                'Guru Pencetak Sang Juara Seni', 'Guru Komunikatif dengan Orangtua Murid', 'Guru Kolaboratif dengan Pemerintah Desa/Kelurahan'
+            ];
+            const KATEGORI_COLORS = {
+                'Guru Inovatif': 'border-blue-500', 'Guru Kreatif': 'border-green-500', 'Guru Inspiratif': 'border-purple-500',
+                'Guru Dedikasi Desa Tertinggal': 'border-yellow-500', 'Guru Menulis Karya Ilmiah': 'border-gray-500',
+                'Guru Menulis Fiksi': 'border-pink-500', 'Guru Pencetak Sang Juara Olahraga': 'border-red-500',
+                'Guru Pencetak Sang Juara Seni': 'border-orange-500', 'Guru Komunikatif dengan Orangtua Murid': 'border-teal-500',
+                'Guru Kolaboratif dengan Pemerintah Desa/Kelurahan': 'border-cyan-500'
+            };
+            const MOCK_SUBMISI = [
+                { id: 1, nama: 'Dr. Budi Santoso, M.Pd.', kategori: 'Guru Inovatif', unitKerja: 'SMAN 1 Pandeglang', tgl: '2025-10-28', videoUrl: 'https://example.com/video1.mp4' },
+                { id: 2, nama: 'Siti Aminah, S.Pd.', kategori: 'Guru Dedikasi Desa Tertinggal', unitKerja: 'SDN 3 Cikeusik', tgl: '2025-10-28', videoUrl: 'https://example.com/video2.mp4' },
+                { id: 3, nama: 'Rahmat Hidayat, S.Sn.', kategori: 'Guru Pencetak Sang Juara Seni', unitKerja: 'SMPN 2 Labuan', tgl: '2025-10-27', videoUrl: 'https://example.com/video3.mp4' },
+                { id: 4, nama: 'Dewi Lestari, S.Pd.', kategori: 'Guru Kreatif', unitKerja: 'TK Pertiwi Pandeglang', tgl: '2025-10-27', videoUrl: 'https://example.com/video4.mp4' },
+                { id: 5, nama: 'Ahmad Zaelani, S.Kom.', kategori: 'Guru Inovatif', unitKerja: 'SMKN 1 Pandeglang', tgl: '2025-10-26', videoUrl: 'https://example.com/video5.mp4' },
+            ];
+
+            // ===== STATE APLIKASI =====
+            let currentRole = 'pendaftar';
+            let isLoggedIn = false;
+            let activeMainTab = 'dashboard';
+            let activeAdminTab = 'admin-stats';
+            let currentKategori = null;
+            let currentKategoriColor = '';
+
+            // --- STATE BARU UNTUK MULTI-STEP FORM ---
+            let currentStep = 1;
+            const totalSteps = 6;
+            let btnNext, btnPrev, btnSubmit, btnPrevPlaceholder;
+            // --- AKHIR STATE BARU ---
+
+            // ===== SELEKTOR ELEMEN UTAMA =====
+            const mainTabNav = document.getElementById('main-tab-nav');
+            const mainTabsMobile = document.getElementById('main-tabs-mobile');
+            const mainContentDivs = document.querySelectorAll('.main-content-div');
+            const loginStatusText = document.getElementById('login-status-text');
+            const logoutBtn = document.getElementById('logout-btn');
+
+            // Selektor Form
+            const viewPendaftarSelect = document.getElementById('view-pendaftar-select');
+            const viewPendaftarForm = document.getElementById('view-pendaftar-form');
+            const kategoriSelect = document.getElementById('kategori-select');
+            const btnPilihKategori = document.getElementById('btn-pilih-kategori');
+            const btnKembali = document.getElementById('btn-kembali');
+            const formCard = document.getElementById('form-card');
+            const formTitle = document.getElementById('form-title');
+            const formSubtitle = document.getElementById('form-subtitle');
+            const formPendaftaran = document.getElementById('form-pendaftaran');
+
+            // Selektor Modal
+            const successModal = document.getElementById('success-modal');
+            const modalCloseBtn = document.getElementById('modal-close-btn');
+            const loginModal = document.getElementById('login-modal');
+            const loginForm = document.getElementById('login-form');
+            const loginBtn = document.getElementById('login-btn');
+            const loginCancelBtn = document.getElementById('login-cancel-btn');
+            const loginCloseBtnX = document.getElementById('login-close-btn-x');
+            const loginUsername = document.getElementById('login-username');
+            const loginPassword = document.getElementById('login-password');
+            const loginError = document.getElementById('login-error');
+            const loginTitle = document.getElementById('login-modal-title');
+            
+            // Selektor Tab Juri
+            const juriLoginPrompt = document.getElementById('juri-login-prompt');
+            const juriLoginBtn = document.getElementById('juri-login-btn');
+            const juriContentWrapper = document.getElementById('juri-content-wrapper');
+            const juriFilterKategori = document.getElementById('juri-filter-kategori');
+            const juriSubmisiTable = document.getElementById('juri-submisi-table');
+            const juriSubmisiTableBody = juriSubmisiTable ? juriSubmisiTable.querySelector('tbody') : null;
+
+            // Selektor Tab Admin
+            const adminLoginPrompt = document.getElementById('admin-login-prompt');
+            const adminLoginBtn = document.getElementById('admin-login-btn');
+            const adminContentWrapper = document.getElementById('admin-content-wrapper');
+            const adminTabNav = document.getElementById('admin-tab-nav');
+            const adminTabsMobile = document.getElementById('admin-tabs-mobile');
+            const adminContentDivs = document.querySelectorAll('.admin-content-div');
+            const adminFilterKategori = document.getElementById('admin-filter-kategori');
+            const adminSubmisiTable = document.getElementById('admin-submisi-table');
+            const adminSubmisiTableBody = adminSubmisiTable ? adminSubmisiTable.querySelector('tbody') : null;
+            
+            // ===== FUNGSI HELPER =====
+            function showLoading(button, text = "Memproses...") {
+                const loadingSpinner = `<svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>`;
+                button.innerHTML = `${loadingSpinner} ${text}`;
+                button.disabled = true;
+                button.style.width = `${button.offsetWidth}px`; // Kunci lebar
+            }
+
+            function hideLoading(button, originalText) {
+                button.disabled = false;
+                button.innerHTML = originalText;
+                button.style.width = ''; // Hapus kunci lebar
+            }
+
+            // --- FUNGSI PERINGATAN AKSES VIDEO BARU ---
+            // --- GANTIKAN showVideoAccessAlert() ALERT BAWaan dengan modal kustom ---
+function showVideoAccessAlert() {
+    return new Promise((resolve) => {
+        const modal = document.getElementById('video-access-modal');
+        const btnOk = document.getElementById('video-access-modal-ok');
+        const btnCancel = document.getElementById('video-access-modal-cancel');
+        const btnCloseX = document.getElementById('video-access-modal-close-x');
+
+        if (!modal || !btnOk || !btnCancel || !btnCloseX) {
+            // Fallback ke alert jika element modal belum tersedia
+            alert("⚠️ PERHATIAN PENTING SEBELUM LANJUT:\n\nAnda harus mengunggah video karya Anda ke Google Drive pribadi dan menyalin tautan (link) ke dalam formulir.\n\nPastikan SEBELUM MENGISI tautan, akses tautan video Anda sudah disetel ke 'Siapa saja yang memiliki tautan dapat melihat'.\n\nJika akses dikunci, panitia tidak akan bisa menilai karya Anda!");
+            resolve(true);
+            return;
+        }
+
+        // tampilkan modal
+        modal.classList.remove('hidden');
+        // fokus ke tombol OK agar pengguna bisa tekan Enter
+        btnOk.focus();
+
+        function cleanup(result) {
+            modal.classList.add('hidden');
+            btnOk.removeEventListener('click', onOk);
+            btnCancel.removeEventListener('click', onCancel);
+            btnCloseX.removeEventListener('click', onCancel);
+            resolve(result); // true jika OK, false jika batal
+        }
+
+        function onOk() {
+            cleanup(true);
+        }
+        function onCancel() {
+            cleanup(false);
+        }
+
+        btnOk.addEventListener('click', onOk);
+        btnCancel.addEventListener('click', onCancel);
+        btnCloseX.addEventListener('click', onCancel);
+    });
+}
+// --- AKHIR FUNGSIONALITAS PERINGATAN AKSES VIDEO ---
+
+
+            // ===== FUNGSI INISIALISASI =====
+            function init() {
+                // Validasi penting
+                if (!juriSubmisiTableBody || !adminSubmisiTableBody) {
+                    console.error("Kesalahan kritis: Gagal menemukan <tbody> untuk tabel juri atau admin.");
+                    // Anda bisa menampilkan pesan error ke pengguna di sini
+                    return; // Hentikan eksekusi lebih lanjut
+                }
+                
+                // --- INISIALISASI TOMBOL NAVIGASI FORM ---
+                btnNext = document.getElementById('btn-next');
+                btnPrev = document.getElementById('btn-prev');
+                btnSubmit = document.getElementById('submit-form-btn');
+                btnPrevPlaceholder = document.getElementById('btn-prev-placeholder');
+                // --- AKHIR INISIALISASI TOMBOL ---
+
+                populateKategoriDropdowns();
+                setupEventListeners();
+                switchMainTab('dashboard'); // Tampilkan tab dashboard publik
+                renderPublicDashboardStats();
+            }
+
+            function populateKategoriDropdowns() {
+                let optionsHtml = KATEGORI_LIST.map(k => `<option value="${k}">${k}</option>`).join('');
+                kategoriSelect.innerHTML += optionsHtml;
+                juriFilterKategori.innerHTML += optionsHtml;
+                adminFilterKategori.innerHTML += optionsHtml;
+            }
+
+            function setupEventListeners() {
+                // Navigasi Tab Utama
+                mainTabNav.addEventListener('click', handleMainTabClick);
+                mainTabsMobile.addEventListener('change', (e) => handleMainTabClick(e, true));
+
+                // Form Pendaftaran
+                btnPilihKategori.addEventListener('click', handleKategoriSelect);
+                btnKembali.addEventListener('click', showKategoriSelect);
+                formPendaftaran.addEventListener('submit', handleSubmitForm);
+
+                // Modal
+                modalCloseBtn.addEventListener('click', closeModal);
+                loginForm.addEventListener('submit', handleLoginAttempt);
+                loginCancelBtn.addEventListener('click', hideLoginModal);
+                loginCloseBtnX.addEventListener('click', hideLoginModal);
+                logoutBtn.addEventListener('click', handleLogout);
+
+                // Tombol login di dalam tab
+                juriLoginBtn.addEventListener('click', () => showLoginModal('juri'));
+                adminLoginBtn.addEventListener('click', () => showLoginModal('admin'));
+                
+                // Navigasi Tab Internal Admin
+                adminTabNav.addEventListener('click', handleAdminTabClick);
+                adminTabsMobile.addEventListener('change', (e) => switchAdminTab(e.target.value));
+                
+                // Filter Tabel
+                juriFilterKategori.addEventListener('change', renderJuriSubmisiTable);
+                adminFilterKategori.addEventListener('change', renderAdminSubmisiTable);
+                
+                // Aksi Tabel (Event Delegation)
+                juriSubmisiTableBody.addEventListener('click', handleTableAction);
+                adminSubmisiTableBody.addEventListener('click', handleTableAction);
+
+                // --- EVENT LISTENER BARU UNTUK NAVIGASI STEP ---
+                btnNext.addEventListener('click', handleNextStep);
+                btnPrev.addEventListener('click', handlePrevStep);
+                // --- AKHIR EVENT LISTENER BARU ---
+
+                // Form Tambah Akun
+                const formTambahAkun = document.getElementById('form-tambah-akun');
+                if (formTambahAkun) {
+                    formTambahAkun.addEventListener('submit', handleTambahAkun);
+                }
+            }
+
+            // ===== FUNGSI NAVIGASI TAB UTAMA =====
+            function handleMainTabClick(e, isMobile = false) {
+                const tabName = isMobile ? e.target.value : e.target.closest('.main-tab-btn')?.dataset.tab;
+                if (!tabName) return;
+
+                if (tabName === 'juri' || tabName === 'admin') {
+                    if (isLoggedIn && (currentRole === tabName || (currentRole === 'superadmin' && tabName === 'admin'))) {
+                        switchMainTab(tabName);
+                    } else {
+                        showLoginModal(tabName);
+                    }
+                } else {
+                    switchMainTab(tabName);
+                }
+            }
+
+            function switchMainTab(tabName) {
+                activeMainTab = tabName;
+                if (mainTabsMobile.value !== tabName) {
+                    mainTabsMobile.value = tabName;
+                }
+
+                // Sembunyikan semua konten utama
+                mainContentDivs.forEach(div => div.classList.add('hidden'));
+                // Hapus style aktif dari semua tombol tab utama
+                document.querySelectorAll('.main-tab-btn').forEach(btn => btn.classList.remove('active', 'border-indigo-500', 'text-indigo-600', 'bg-indigo-50'));
+                document.querySelectorAll('.main-tab-btn').forEach(btn => btn.classList.add('text-gray-500', 'hover:text-gray-700', 'hover:border-gray-300'));
+
+                // Tampilkan konten yang dipilih
+                const contentDiv = document.getElementById(`main-content-${tabName}`);
+                if (contentDiv) {
+                    contentDiv.classList.remove('hidden');
+                }
+                
+                // Atur style aktif tombol yang dipilih
+                const activeBtn = document.getElementById(`main-tab-${tabName}`);
+                if (activeBtn) {
+                    activeBtn.classList.add('active', 'border-indigo-500', 'text-indigo-600', 'bg-indigo-50');
+                    activeBtn.classList.remove('text-gray-500', 'hover:text-gray-700', 'hover:border-gray-300');
+                }
+                
+                // Render konten tab yang dilindungi (jika ada)
+                renderProtectedContent(tabName);
+            }
+
+            // ===== FUNGSI LOGIN & AUTENTIKASI =====
+            function showLoginModal(role) {
+                loginTitle.textContent = `Login sebagai ${role.charAt(0).toUpperCase() + role.slice(1)}`;
+                loginModal.dataset.attemptRole = role;
+                loginModal.classList.remove('hidden');
+                loginUsername.focus();
+            }
+
+            function hideLoginModal() {
+                loginModal.classList.add('hidden');
+                loginError.classList.add('hidden');
+                loginForm.reset();
+            }
+
+            async function handleLoginAttempt(e) {
+                e.preventDefault();
+                const username = loginUsername.value;
+                const password = loginPassword.value;
+                const attemptRole = loginModal.dataset.attemptRole;
+
+                const originalBtnText = loginBtn.innerHTML;
+                showLoading(loginBtn, "Connecting...");
+
+                try {
+                    const response = await fetch(GAS_WEB_APP_URL, {
+                        method: 'POST',
+                        body: JSON.stringify({
+                            action: 'login',
+                            role: attemptRole,
+                            username: username,
+                            password: password
+                        }),
+                        headers: {
+                            'Content-Type': 'application/json'
+                        }
+                    });
+
+                    if (!response.ok) {
+                        throw new Error(`Server error: ${response.statusText}`);
+                    }
+
+                    const result = await response.json();
+
+                    if (result.success) {
+                        isLoggedIn = true;
+                        currentRole = result.role; // 'juri', 'admin', or 'superadmin'
+                        hideLoginModal();
+                        updateLoginStatus();
+                        switchMainTab(currentRole === 'superadmin' ? 'admin' : currentRole);
+                    } else {
+                        loginError.classList.remove('hidden');
+                    }
+
+                } catch (error) {
+                    console.error('Login error:', error);
+                    loginError.textContent = 'Gagal terhubung ke server. Coba lagi nanti.';
+                    loginError.classList.remove('hidden');
+                } finally {
+                    hideLoading(loginBtn, originalBtnText);
+                }
+            }
+            
+            async function handleLogout() {
+                currentRole = 'pendaftar';
+                isLoggedIn = false;
+                updateLoginStatus();
+                switchMainTab('dashboard'); // Kembali ke dashboard publik
+
+                // Logika logout dari GAS (jika diperlukan, tapi untuk sekarang tidak ada)
+                // const response = await fetch(GAS_WEB_APP_URL, { ... });
+            }
+            
+            function updateLoginStatus() {
+                if (isLoggedIn) {
+                    let roleName = currentRole.charAt(0).toUpperCase() + currentRole.slice(1);
+                    if (currentRole === 'superadmin') roleName = 'Super Admin'; // Tampilkan 'Super Admin'
+                    
+                    loginStatusText.innerHTML = `Anda masuk sebagai: <strong class="font-medium text-indigo-600">${roleName}</strong>`;
+                    logoutBtn.classList.remove('hidden');
+                } else {
+                    loginStatusText.innerHTML = `Anda masuk sebagai: <strong class="font-medium text-indigo-600">Pendaftar</strong>`;
+                    logoutBtn.classList.add('hidden');
+                }
+            }
+
+            // Fungsi untuk menampilkan/menyembunyikan konten Juri/Admin
+            function renderProtectedContent(tabName) {
+                if (tabName === 'juri') {
+                    if (isLoggedIn && currentRole === 'juri') {
+                        juriLoginPrompt.classList.add('hidden');
+                        juriContentWrapper.classList.remove('hidden');
+                        renderJuriSubmisiTable(); // Muat data saat tab dibuka
+                    } else {
+                        juriLoginPrompt.classList.remove('hidden');
+                        juriContentWrapper.classList.add('hidden');
+                    }
+                } else if (tabName === 'admin') {
+                    if (isLoggedIn && (currentRole === 'admin' || currentRole === 'superadmin')) { // Diperbarui
+                        adminLoginPrompt.classList.add('hidden');
+                        adminContentWrapper.classList.remove('hidden');
+                        renderAdminDashboardStats(); // Muat statistik admin
+                        renderAdminSubmisiTable(); // Muat data admin
+                        
+                        // Logika BARU: Tampilkan/sembunyikan tab Manajemen User
+                        if (currentRole === 'superadmin') {
+                            document.getElementById('admin-tab-btn-users').classList.remove('hidden');
+                            document.getElementById('admin-tabs-mobile-option-users').classList.remove('hidden');
+                            renderUserList(); // Render daftar user
+                        } else {
+                            document.getElementById('admin-tab-btn-users').classList.add('hidden');
+                            document.getElementById('admin-tabs-mobile-option-users').classList.add('hidden');
+                            // Jika admin biasa kebetulan ada di tab user, kembalikan ke stats
+                            if (activeAdminTab === 'admin-users') {
+                                switchAdminTab('admin-stats');
+                            }
+                        }
+                        
+                        switchAdminTab(activeAdminTab); // Atur tab internal
+                    } else {
+                        adminLoginPrompt.classList.remove('hidden');
+                        adminContentWrapper.classList.add('hidden');
+                    }
+                }
+            }
+
+            // ===== FUNGSI FORMULIR PENDAFTARAN =====
+            function showKategoriSelect() {
+                viewPendaftarSelect.classList.remove('hidden');
+                viewPendaftarForm.classList.add('hidden');
+                currentKategori = null;
+                kategoriSelect.value = '';
+                formPendaftaran.reset();
+                showStep(1); // Kembalikan ke langkah 1
+            }
+
+            async function handleKategoriSelect() {
+                const selected = kategoriSelect.value;
+                if (!selected) {
+                    kategoriSelect.classList.add('border-red-500', 'ring-red-500');
+                    return;
+                }
+                kategoriSelect.classList.remove('border-red-500', 'ring-red-500');
+                currentKategori = selected;
+                
+                if(currentKategoriColor) formCard.classList.remove(currentKategoriColor);
+                currentKategoriColor = KATEGORI_COLORS[currentKategori] || 'border-indigo-500';
+                formCard.classList.add(currentKategoriColor);
+                
+                formTitle.textContent = `Formulir: ${currentKategori}`;
+                formSubtitle.textContent = `Mengajukan untuk kategori ${currentKategori}.`;
+                
+                // --- PERINGATAN BERGANDA: DITAMPILKAN DI SINI ---
+                const confirmed = await showVideoAccessAlert();
+                if (!confirmed) { return; }
+                
+                // --- AKHIR PERINGATAN BERGANDA ---
+
+                viewPendaftarSelect.classList.add('hidden');
+                viewPendaftarForm.classList.remove('hidden');
+                window.scrollTo(0, 0);
+                showStep(1); // Pastikan form dimulai dari langkah 1
+            }
+
+            async function handleSubmitForm(e) {
+                e.preventDefault();
+                
+                const submitButton = document.getElementById('submit-form-btn');
+                const originalBtnText = submitButton.innerHTML;
+                showLoading(submitButton, "Mengirim Pendaftaran...");
+
+                // Kumpulkan semua data dari form
+                const formData = {
+                    kategori: currentKategori,
+                    namaLengkap: document.getElementById('nama-lengkap').value,
+                    tempatLahir: document.getElementById('tempat-lahir').value,
+                    tanggalLahir: document.getElementById('tanggal-lahir').value,
+                    nik: document.getElementById('nik').value,
+                    statusKepegawaian: document.getElementById('status-kepegawaian').value,
+                    nip: document.getElementById('nip').value,
+                    nuptk: document.getElementById('nuptk').value,
+                    pangkatGol: document.getElementById('pangkat-gol').value,
+                    jabatanFungsional: document.getElementById('jabatan-fungsional').value,
+                    jenjang: document.getElementById('jenjang').value,
+                    namaSatuanPendidikan: document.getElementById('nama-satuan-pendidikan').value,
+                    alamatSatuanPendidikan: document.getElementById('alamat-satuan-pendidikan').value,
+                    kecamatanSatuanPendidikan: document.getElementById('kecamatan-satuan-pendidikan').value,
+                    alamatTempatTinggal: document.getElementById('alamat-tempat-tinggal').value,
+                    kecamatanTempatTinggal: document.getElementById('kecamatan-tempat-tinggal').value,
+                    kabupatenKotaTempatTinggal: document.getElementById('kabupaten-kota-tempat-tinggal').value,
+                    nomorWhatsapp: document.getElementById('nomor-whatsapp').value,
+                    emailPersonal: document.getElementById('email-personal').value,
+                    deskripsi: document.getElementById('deskripsi').value,
+                    // --- PERUBAHAN: Mengambil tautan video dari input teks ---
+                    tautanVideo: document.getElementById('tautan-video').value,
+                    // --- AKHIR PERUBAHAN ---
+                    persetujuan: document.getElementById('persetujuan').checked
+                };
+                
+                try {
+                    const response = await fetch(GAS_WEB_APP_URL, {
+                        method: 'POST',
+                        body: JSON.stringify({
+                            action: 'submitRegistration',
+                            data: formData 
+                        }),
+                        headers: {
+                            'Content-Type': 'application/json'
+                        }
+                    });
+
+                    if (!response.ok) {
+                         throw new Error(`Server error: ${response.statusText}`);
+                    }
+
+                    const result = await response.json();
+
+                    if (result.success) {
+                        // Tampilkan modal sukses
+                        successModal.classList.remove('hidden');
+                    } else {
+                        // Tampilkan pesan error
+                        // ALERT DIGANTI DENGAN KONSOL, SESUAI INSTRUKSI UTAMA!
+                        console.error(`Gagal mengirim pendaftaran: ${result.message}`);
+                        // Tampilkan modal error kustom jika diperlukan
+                    }
+
+                } catch (error) {
+                    console.error('Submit form error:', error);
+                    // ALERT DIGANTI DENGAN KONSOL
+                    console.error('Terjadi kesalahan koneksi saat mengirim formulir. Silakan coba lagi.');
+                } finally {
+                    hideLoading(submitButton, originalBtnText);
+                }
+            }
+            
+            function closeModal() {
+                successModal.classList.add('hidden');
+                showKategoriSelect();
+            }
+
+            // --- FUNGSI BARU UNTUK MULTI-STEP FORM ---
+            function handleNextStep() {
+                // Validasi step saat ini sebelum lanjut
+                if (validateStep(currentStep)) {
+                    if (currentStep < totalSteps) {
+                        showStep(currentStep + 1);
+                    }
+                }
+            }
+
+            function handlePrevStep() {
+                if (currentStep > 1) {
+                    showStep(currentStep - 1);
+                }
+            }
+
+            function showStep(stepNumber) {
+                // Sembunyikan semua step
+                document.querySelectorAll('.form-step').forEach(step => {
+                    step.classList.add('hidden');
+                });
+                
+                // Tampilkan step yang aktif
+                const activeStepDiv = document.getElementById(`form-step-${stepNumber}`);
+                if (activeStepDiv) {
+                    activeStepDiv.classList.remove('hidden');
+                }
+
+                currentStep = stepNumber;
+                updateStepperUI(stepNumber);
+                updateNavigationButtons(stepNumber);
+            }
+
+            function updateStepperUI(stepNumber) {
+                for (let i = 1; i <= totalSteps; i++) {
+                    const stepElement = document.getElementById(`stepper-step-${i}`);
+                    if (!stepElement) continue;
+
+                    if (i < stepNumber) {
+                        // Selesai
+                        stepElement.classList.add('completed');
+                        stepElement.classList.remove('active');
+                    } else if (i === stepNumber) {
+                        // Aktif
+                        stepElement.classList.add('active');
+                        stepElement.classList.remove('completed');
+                    } else {
+                        // Mendatang
+                        stepElement.classList.remove('active', 'completed');
+                    }
+                }
+            }
+
+            function updateNavigationButtons(stepNumber) {
+                if (stepNumber === 1) {
+                    // Langkah pertama
+                    btnPrev.classList.add('hidden');
+                    btnPrevPlaceholder.classList.remove('hidden'); // Tampilkan placeholder
+                    btnNext.classList.remove('hidden');
+                    btnSubmit.classList.add('hidden');
+                } else if (stepNumber === totalSteps) {
+                    // Langkah terakhir
+                    btnPrev.classList.remove('hidden');
+                    btnPrevPlaceholder.classList.add('hidden');
+                    btnNext.classList.add('hidden');
+                    btnSubmit.classList.remove('hidden'); 
+                } else {
+                    // Langkah di tengah
+                    btnPrev.classList.remove('hidden');
+                    btnPrevPlaceholder.classList.add('hidden');
+                    btnNext.classList.remove('hidden');
+                    btnSubmit.classList.add('hidden');
+                }
+            }
+
+            function validateStep(stepNumber) {
+                const currentStepDiv = document.getElementById(`form-step-${stepNumber}`);
+                if (!currentStepDiv) return false;
+
+                // Memilih input wajib kecuali untuk radio/checkbox yang ditangani terpisah
+                const inputs = currentStepDiv.querySelectorAll('input[required]:not([type="checkbox"]), select[required], textarea[required]');
+                let isValid = true;
+                let firstInvalidInput = null;
+
+                // Hapus error lama
+                currentStepDiv.querySelectorAll('.border-red-500').forEach(el => el.classList.remove('border-red-500'));
+                
+                for (const input of inputs) {
+                    if (!input.checkValidity()) {
+                        isValid = false;
+                        input.classList.add('border-red-500'); // Tampilkan error border
+                        if (!firstInvalidInput) {
+                            firstInvalidInput = input; // Simpan input tidak valid pertama
+                        }
+                    } else {
+                        input.classList.remove('border-red-500');
+                    }
+                }
+                
+                // Khusus untuk checkbox persetujuan di langkah terakhir
+                if (stepNumber === totalSteps) {
+                    const agreementCheckbox = document.getElementById('persetujuan');
+                    if (agreementCheckbox && !agreementCheckbox.checked) {
+                        isValid = false;
+                        // Tidak ada border untuk checkbox, tapi kita bisa fokus ke dalamnya
+                        if (!firstInvalidInput) {
+                             firstInvalidInput = agreementCheckbox;
+                        }
+                    }
+                }
+
+
+                if (!isValid && firstInvalidInput) {
+                    firstInvalidInput.focus(); // Fokus ke input pertama yang error
+                    console.warn(`Validasi gagal di langkah ${stepNumber}`);
+                }
+                
+                return isValid;
+            }
+            // --- AKHIR FUNGSI BARU ---
+
+
+            // ===== FUNGSI NAVIGASI TAB INTERNAL ADMIN =====
+            function handleAdminTabClick(e) {
+                const tabName = e.target.closest('.admin-tab-btn')?.dataset.tab;
+                if (!tabName) return;
+                switchAdminTab(tabName);
+            }
+
+            function switchAdminTab(tabName) {
+                activeAdminTab = tabName;
+                adminTabsMobile.value = tabName;
+
+                adminContentDivs.forEach(div => div.classList.add('hidden'));
+                document.querySelectorAll('.admin-tab-btn').forEach(btn => {
+                    btn.classList.remove('border-indigo-500', 'text-indigo-600');
+                    btn.classList.add('border-transparent', 'text-gray-500', 'hover:text-gray-700', 'hover:border-gray-300');
+                });
+
+                const tabDiv = document.getElementById(tabName);
+                if (tabDiv) {
+                    tabDiv.classList.remove('hidden');
+                }
+                
+                const tabBtn = document.getElementById(`admin-tab-btn-${tabName.split('-')[1]}`);
+                if (tabBtn) {
+                    tabBtn.classList.add('border-indigo-500', 'text-indigo-600');
+                    tabBtn.classList.remove('border-transparent', 'text-gray-500', 'hover:text-gray-700', 'hover:border-gray-300');
+                }
+            }
+
+            // ===== FUNGSI RENDER DATA =====
+            
+            function renderPublicDashboardStats() {
+                // Di dunia nyata, ini akan mengambil data publik
+                // Untuk sekarang, kita gunakan MOCK_SUBMISI
+                document.getElementById('stat-total').textContent = MOCK_SUBMISI.length;
+                document.getElementById('stat-k1').textContent = MOCK_SUBMISI.filter(s => s.kategori === 'Guru Inovatif').length;
+                document.getElementById('stat-k2').textContent = MOCK_SUBMISI.filter(s => s.kategori === 'Guru Inspiratif').length;
+            }
+
+            function renderAdminDashboardStats() {
+                // Statistik admin bisa jadi sama atau lebih detail
+                document.getElementById('admin-stat-total').textContent = MOCK_SUBMISI.length;
+                document.getElementById('admin-stat-k1').textContent = MOCK_SUBMISI.filter(s => s.kategori === 'Guru Inovatif').length;
+                document.getElementById('admin-stat-k2').textContent = MOCK_SUBMISI.filter(s => s.kategori === 'Guru Inspiratif').length;
+            }
+            
+            // Fungsi render tabel Juri
+            function renderJuriSubmisiTable() {
+                const filterValue = juriFilterKategori.value;
+                const filteredData = filterValue === 'semua' ? MOCK_SUBMISI : MOCK_SUBMISI.filter(s => s.kategori === filterValue);
+                renderTable(juriSubmisiTableBody, filteredData);
+            }
+
+            // Fungsi render tabel Admin
+            function renderAdminSubmisiTable() {
+                const filterValue = adminFilterKategori.value;
+                const filteredData = filterValue === 'semua' ? MOCK_SUBMISI : MOCK_SUBMISI.filter(s => s.kategori === filterValue);
+                renderTable(adminSubmisiTableBody, filteredData);
+            }
+
+            // Fungsi generik untuk mengisi tabel
+            function renderTable(tbody, data) {
+                if (!tbody) {
+                    console.error("Elemen tbody tidak ditemukan untuk renderTable.");
+                    return;
+                }
+                if (data.length === 0) {
+                    tbody.innerHTML = `<tr><td colspan="5" class="px-6 py-4 text-center text-gray-500">Tidak ada data untuk kategori ini.</td></tr>`;
+                    return;
+                }
+                
+                tbody.innerHTML = data.map(item => `
+                    <tr class="hover:bg-gray-50">
+                        <td class="px-6 py-4 whitespace-nowrap">
+                            <div class="text-sm font-medium text-gray-900">${item.nama}</div>
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap">
+                            <span class="px-3 py-1 inline-flex text-xs leading-5 font-semibold rounded-full bg-gray-100 text-gray-800">
+                                ${item.kategori}
+                            </span>
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-600">${item.unitKerja}</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-600">${item.tgl}</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium space-x-2">
+                            <a href="${item.videoUrl}" target="_blank" class="text-indigo-600 hover:text-indigo-900" title="Lihat/Unduh Video">
+                                <svg class="w-5 h-5 inline-block" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" /><path stroke-linecap="round" stroke-linejoin="round" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" /></svg>
+                            </a>
+                            <button class="btn-unduh-data-item text-gray-500 hover:text-gray-800" data-id="${item.id}" title="Lihat Data Formulir">
+                                <svg class="w-5 h-5 inline-block" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" /></svg>
+                            </button>
+                        </td>
+                    </tr>
+                `).join('');
+            }
+            
+            function handleTableAction(e) {
+                const videoLink = e.target.closest('a[target="_blank"]'); // Menggunakan <a> untuk link video
+                const dataButton = e.target.closest('.btn-unduh-data-item');
+
+                if (videoLink) {
+                    // Tindakan membuka link sudah ditangani oleh tag <a>.
+                    console.log(`Membuka tautan video: ${videoLink.href}`);
+                }
+                
+                if (dataButton) {
+                    const id = dataButton.dataset.id;
+                    const item = MOCK_SUBMISI.find(s => s.id == id);
+                    // ALERT DIGANTI DENGAN KONSOL
+                    console.log(`Simulasi: Membuka data detail untuk ${item.nama}`);
+                }
+            }
+            
+            // BARU: Fungsi untuk menangani penambahan akun (terhubung ke GAS)
+            async function handleTambahAkun(e) {
+                e.preventDefault();
+                const newUsername = document.getElementById('new-username').value;
+                const newPassword = document.getElementById('new-password').value;
+                const newRole = document.getElementById('new-role').value;
+
+                const submitButton = e.target.querySelector('button[type="submit"]');
+                const originalBtnText = submitButton.innerHTML;
+                showLoading(submitButton, "Menambahkan...");
+
+                try {
+                    const response = await fetch(GAS_WEB_APP_URL, {
+                        method: 'POST',
+                        body: JSON.stringify({
+                            action: 'addUser',
+                            newUsername, // ES6 shorthand for newUsername: newUsername
+                            newPassword,
+                            newRole
+                        }),
+                        headers: { 'Content-Type': 'application/json' }
+                    });
+
+                    const result = await response.json();
+
+                    if (result.success) {
+                        // ALERT DIGANTI DENGAN KONSOL
+                        console.log('Sukses: Akun baru berhasil ditambahkan.');
+                        document.getElementById('form-tambah-akun').reset();
+                        renderUserList(); // Muat ulang daftar user (jika ada)
+                    } else {
+                        // ALERT DIGANTI DENGAN KONSOL
+                        console.error('Error: ' + result.message);
+                    }
+                } catch (error) {
+                    console.error('Error adding user:', error);
+                    // ALERT DIGANTI DENGAN KONSOL
+                    console.error('Gagal terhubung ke server untuk menambah akun.');
+                } finally {
+                    hideLoading(submitButton, originalBtnText);
+                }
+            }
+            
+            // BARU: Fungsi untuk merender daftar user (simulasi)
+            function renderUserList() {
+                // Simulasi: Di dunia nyata, ini akan mengambil data dari GAS
+                // Untuk saat ini, kita hanya membersihkan form
+                console.log("Merender ulang daftar user (simulasi)...");
+                // Logika untuk menampilkan daftar user akan ada di sini
+                const userList = document.getElementById('user-list');
+                if(userList) {
+                    userList.innerHTML = '<li>Memuat daftar user... (Simulasi)</li>';
+                    // Anda bisa tambahkan mock data di sini jika mau
+                }
+            }
+
+            // Jalankan inisialisasi
+            init();
+
+        });
+    </script>
+</body>
+</html>
