@@ -1055,6 +1055,7 @@ html { scroll-padding-top: 80px; } /* agar anchor/scroll tidak tertutup header *
         document.addEventListener('DOMContentLoaded', function() {
             
             // ===== KONFIGURASI GOOGLE APPS SCRIPT =====
+            // GANTI URL DI BAWAH INI DENGAN URL BARU DARI HASIL DEPLOYMENT ANDA
             const GAS_WEB_APP_URL = 'https://script.google.com/macros/s/AKfycby5SMN_NyKXGw4aFUIkuJhDQMajrF_vC0WiG-QDw7VtkzQauBTD0ZYVtLMnLGNKP_xd/exec';
             
             // ===== DATA MASTER =====
@@ -1105,14 +1106,18 @@ function fetchSubmissions(cb) {
       cb && cb(e, SUBMISSIONS);
     }
   } else if (typeof GAS_WEB_APP_URL !== 'undefined' && GAS_WEB_APP_URL) {
-    fetch(GAS_WEB_APP_URL + '?action=getSubmissions')
-      .then(r => r.json())
+    fetch(GAS_WEB_APP_URL + '?action=getSubmissions') // Menggunakan fetch ke Web App URL
+      .then(r => {
+        if (!r.ok) { throw new Error(`Network response was not ok: ${r.statusText}`); }
+        return r.json();
+      })
       .then(result => {
-        SUBMISSIONS = Array.isArray(result) ? result : (result && result.data) ? result.data : [];
+        // Asumsikan GAS v3 mengembalikan data yang sudah diformat
+        SUBMISSIONS = Array.isArray(result) ? result : [];
         cb && cb(null, SUBMISSIONS);
       })
       .catch(err => {
-        console.error('fetchSubmissions error', err);
+        console.error('fetchSubmissions error:', err);
         SUBMISSIONS = Array.isArray(MOCK_SUBMISI) ? MOCK_SUBMISI.slice() : [];
         cb && cb(err, SUBMISSIONS);
       });
@@ -1396,6 +1401,7 @@ function showVideoAccessAlert() {
 
                 const originalBtnText = loginBtn.innerHTML;
                 showLoading(loginBtn, "Connecting...");
+                loginError.classList.add('hidden'); // Sembunyikan error lama
 
                 try {
                     const response = await fetch(GAS_WEB_APP_URL, {
@@ -1424,6 +1430,7 @@ function showVideoAccessAlert() {
                         updateLoginStatus();
                         switchMainTab(currentRole === 'superadmin' ? 'admin' : currentRole);
                     } else {
+                        loginError.textContent = result.message || 'Username atau password salah.';
                         loginError.classList.remove('hidden');
                     }
 
@@ -1462,7 +1469,7 @@ function showVideoAccessAlert() {
             // Fungsi untuk menampilkan/menyembunyikan konten Juri/Admin
             function renderProtectedContent(tabName) {
                 if (tabName === 'juri') {
-                    if (isLoggedIn && currentRole === 'juri') {
+                    if (isLoggedIn && (currentRole === 'juri' || currentRole === 'superadmin')) { // Superadmin bisa lihat tab juri
                         juriLoginPrompt.classList.add('hidden');
                         juriContentWrapper.classList.remove('hidden');
                         renderJuriSubmisiTable(); // Muat data saat tab dibuka
@@ -1768,31 +1775,30 @@ function showVideoAccessAlert() {
             // ===== FUNGSI RENDER DATA =====
             
             function renderPublicDashboardStats() {
-                // Di dunia nyata, ini akan mengambil data publik
-                // Untuk sekarang, kita gunakan MOCK_SUBMISI
-                document.getElementById('stat-total').textContent = MOCK_SUBMISI.length;
-                document.getElementById('stat-k1').textContent = MOCK_SUBMISI.filter(s => s.kategori === 'Guru Inovatif').length;
-                document.getElementById('stat-k2').textContent = MOCK_SUBMISI.filter(s => s.kategori === 'Guru Inspiratif').length;
+                // Sekarang menggunakan data live dari SUBMISSIONS
+                document.getElementById('stat-total').textContent = SUBMISSIONS.length;
+                document.getElementById('stat-k1').textContent = SUBMISSIONS.filter(s => s.kategori === 'Guru Inovatif').length;
+                document.getElementById('stat-k2').textContent = SUBMISSIONS.filter(s => s.kategori === 'Guru Inspiratif').length;
             }
 
             function renderAdminDashboardStats() {
                 // Statistik admin bisa jadi sama atau lebih detail
-                document.getElementById('admin-stat-total').textContent = MOCK_SUBMISI.length;
-                document.getElementById('admin-stat-k1').textContent = MOCK_SUBMISI.filter(s => s.kategori === 'Guru Inovatif').length;
-                document.getElementById('admin-stat-k2').textContent = MOCK_SUBMISI.filter(s => s.kategori === 'Guru Inspiratif').length;
+                document.getElementById('admin-stat-total').textContent = SUBMISSIONS.length;
+                document.getElementById('admin-stat-k1').textContent = SUBMISSIONS.filter(s => s.kategori === 'Guru Inovatif').length;
+                document.getElementById('admin-stat-k2').textContent = SUBMISSIONS.filter(s => s.kategori === 'Guru Inspiratif').length;
             }
             
             // Fungsi render tabel Juri
             function renderJuriSubmisiTable() {
                 const filterValue = juriFilterKategori.value;
-                const filteredData = filterValue === 'semua' ? MOCK_SUBMISI : MOCK_SUBMISI.filter(s => s.kategori === filterValue);
+                const filteredData = filterValue === 'semua' ? SUBMISSIONS : SUBMISSIONS.filter(s => s.kategori === filterValue);
                 renderTable(juriSubmisiTableBody, filteredData);
             }
 
             // Fungsi render tabel Admin
             function renderAdminSubmisiTable() {
                 const filterValue = adminFilterKategori.value;
-                const filteredData = filterValue === 'semua' ? MOCK_SUBMISI : MOCK_SUBMISI.filter(s => s.kategori === filterValue);
+                const filteredData = filterValue === 'semua' ? SUBMISSIONS : SUBMISSIONS.filter(s => s.kategori === filterValue);
                 renderTable(adminSubmisiTableBody, filteredData);
             }
 
@@ -1842,7 +1848,7 @@ function showVideoAccessAlert() {
                 
                 if (dataButton) {
                     const id = dataButton.dataset.id;
-                    const item = MOCK_SUBMISI.find(s => s.id == id);
+                    const item = SUBMISSIONS.find(s => s.id == id); // Menggunakan SUBMISSIONS live
                     // ALERT DIGANTI DENGAN KONSOL
                     console.log(`Simulasi: Membuka data detail untuk ${item.nama}`);
                 }
